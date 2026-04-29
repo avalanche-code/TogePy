@@ -1,5 +1,5 @@
 <p align="center">
-<h2>TogePy: A Pokemon Team Builder</h2>
+<h3>TogePy: A Pokemon Team Builder</h3>
 </p>
 
 ---
