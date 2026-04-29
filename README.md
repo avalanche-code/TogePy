@@ -1,4 +1,7 @@
-### TogePy: A Pokemon Team Builder
+<p align="center">
+<h2>TogePy: A Pokemon Team Builder</h2>
+</p>
+
 ---
 
 <p align="center">
