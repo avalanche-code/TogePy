@@ -1,6 +1,4 @@
-<p align="center">
-<h3>TogePy: A Pokemon Team Builder</h3>
-</p>
+<h3 align="center">TogePy: A Pokemon Team Builder</h3>
 
 ---
 
