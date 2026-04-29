@@ -1,4 +1,5 @@
 # TogePy: A Pokemon Team Builder
+---
 
 <img width="300" height="300" alt="mascot" src="https://github.com/user-attachments/assets/29d128c2-659c-4244-9a42-8fce98d0bc91" />
 
