@@ -1,4 +1,5 @@
 <h1 align="center">TogePy: A Pokemon Team Builder</h1>
+<br/><br/><br/>
 
 TogePy is a Pokemon team builder written in Python, and works by querying the [PokeAPI](https://pokeapi.co/) for getting specific information about the Pokemon you want to add to your team.
 
@@ -9,8 +10,10 @@ Planned/Possible features:
   - synergy analysis regarding type variety or other features
   - Stat analysis
 
-> This project is being developed as part of the "Automated Software Development (PRI-ASE)" lecture at University of Applied Sciences in Saarbrücken, Germany (htw saar)
-
+<br/><br/><br/>
 <p align="center">
 <img width="500" height="500" alt="mascot" src="https://github.com/user-attachments/assets/29d128c2-659c-4244-9a42-8fce98d0bc91" display=block />
 </p>
+<br/><br/><br/>
+
+> This project is being developed as part of the "Automated Software Development (PRI-ASE)" lecture at University of Applied Sciences in Saarbrücken, Germany (htw saar)
