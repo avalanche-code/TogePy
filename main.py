@@ -1,6 +1,4 @@
-def main():
-    print("Hello from togepy!")
+import requests
 
+print("Hello World")
 
-if __name__ == "__main__":
-    main()
