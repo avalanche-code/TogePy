@@ -10,6 +10,14 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pylint>=4.0.5",
     "pytest>=9.0.3",
+    "ruff>=0.15.12",
 ]
+
+#Custom Ruff Settings
+[tool.ruff]
+#Enable preview rules for linting
+preview = true
+#PL or pylint
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "PL"]
