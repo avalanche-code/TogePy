@@ -11,3 +11,5 @@ class APICaller:
             raise ValueError("Pokemon name not found")
         else:
             return result.json()
+
+#single response principle
