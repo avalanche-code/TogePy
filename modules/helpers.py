@@ -1,4 +1,6 @@
 import httpx
+from os import name as os_name
+from subprocess import call
 
 class APICaller:
     def __init__(self):
@@ -12,4 +14,6 @@ class APICaller:
         else:
             return result.json()
 
+def clearconsole():
+    call("cls" if os_name == "nt" else "clear")
 #single response principle

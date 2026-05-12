@@ -2,11 +2,12 @@ class Pokemon:
     def __init__(self, pokedex_id: int,
                  name: str,
                  gender: str,
-                 type: str,
+                 maintype: str,
+                 sectype: str,
                  ability:str,
                  moves: list[str] = None
                  ):
-        #This to prevent "argument is mutable" warning if this is default value
+        #This to prevent "argument is mutable" warning if this is default value, type already exists!
         if moves is None:
             moves = ["/", "/", "/", "/"]
         else:
@@ -14,7 +15,8 @@ class Pokemon:
         self.pokedex_id = pokedex_id
         self.name = name
         self.gender = gender
-        self.type = type
+        self.maintype = maintype
+        self.sectype = sectype
         self.ability = ability
 
     def __add__(self, other):
