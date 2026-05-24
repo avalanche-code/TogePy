@@ -18,6 +18,8 @@ dev = [
 [tool.ruff]
 #Enable preview rules for linting
 preview = true
-#PL or pylint
+#"PL" for pylint
+#"N" for pep8-naming
+#"E" for pycodestyle, beide machen Line too long oder "not enough blanks"
 [tool.ruff.lint]
-select = ["E", "F", "I", "B", "UP", "N", "PL"]
+select = ["F", "I", "B", "UP", "PL"]

@@ -1,7 +1,12 @@
-from modules.helpers import APICaller, clearconsole  # folder structure: folder.module works, no / needed
+from modules.helpers import (
+    APICaller,
+    clearconsole,
+)
+
 
 def __main__():
     clearconsole()
+    # TODO: display error message here, check error flag!
     while True:
         print("What would you like to do?\n"
               "\t [1] Query Pokemon (testfunction)"
@@ -23,8 +28,6 @@ def __main__():
             continue
 
 
-
-
 my_apicaller = APICaller()
 pokemon_name = input("Enter pokemon name: ")
 pokemon1 = my_apicaller.get_pokemon_name(pokemon_name)
@@ -34,7 +37,7 @@ for key, value in pokemon1.items():
     if key == "abilities":
         ability_dictlist = value
 
-#getting first ability
+# getting first ability
 ability1 = ""
 for k, v in ability_dictlist[0].items():
     if k == "ability":
