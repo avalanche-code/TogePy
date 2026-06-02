@@ -23,3 +23,5 @@ preview = true
 #"E" for pycodestyle, beide machen Line too long oder "not enough blanks"
 [tool.ruff.lint]
 select = ["F", "I", "B", "UP", "PL"]
+
+

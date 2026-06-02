@@ -39,6 +39,8 @@ def main():
 
         # check if input is in valid range: if not set flag "SELECT_ERR" = 1, raise error
         # theoretically I want to handle except at start of funct, so have to use flag?
+
+        #continue statt try except
         try:
             inp = int(inp)
             if inp < LIST_MIN or inp > LIST_MAX:

@@ -1,6 +1,8 @@
-import httpx
 from os import name as os_name
 from subprocess import call
+
+import httpx
+
 
 class APICaller:
     def __init__(self):

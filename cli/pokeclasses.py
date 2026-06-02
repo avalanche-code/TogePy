@@ -4,7 +4,7 @@ class Pokemon:
                  gender: str,
                  maintype: str,
                  sectype: str,
-                 ability:str,
+                 ability: str,
                  moves: list[str] = None
                  ):
 
