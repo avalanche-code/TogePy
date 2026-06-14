@@ -9,6 +9,7 @@ from textual.containers import (
     VerticalScroll,
 )
 from textual.widgets import Button, Footer, Header, Label
+from textual.screen import Screen
 
 
 class MainMenuButtons(Vertical):
@@ -20,14 +21,15 @@ class MainMenuText(Vertical):
     def compose(self) -> ComposeResult:
         yield Label("Example/Introductory text here")
 
-class PokePyApp(App):
-    """PokePy Team Builder: Main TUI App entry point"""
-    BINDINGS = [("ctrl+q", "quit", "Quit PokePy")]
-
+class MainMenu(Screen):
     def compose(self) -> ComposeResult:
         yield Horizontal(MainMenuButtons(), MainMenuText())
         yield Header(name="PokePy Team Builder")
         yield Footer()
+
+class PokePyApp(App):
+    """PokePy Team Builder: Main TUI App entry point"""
+    BINDINGS = [("ctrl+q", "quit", "Quit PokePy")]
 
     def on_mount(self) -> None:
         self.theme = "gruvbox"
