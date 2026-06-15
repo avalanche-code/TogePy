@@ -8,13 +8,13 @@ from textual.containers import (
     VerticalGroup,
     VerticalScroll,
 )
-from textual.widgets import Button, Footer, Header, Label
 from textual.screen import Screen
+from textual.widgets import Button, Footer, Header, Input, Label
 
 
 class MainMenuButtons(Vertical):
     def compose(self) -> ComposeResult:
-        yield Button("Show Teams", id="sh_teams", variant="primary")
+        yield Button("Show Teams", id="sh_teams", variant="primary", disabled=True)
         yield Button("Query Pokemon", id="q_pokemon", variant="primary")
 
 class MainMenuText(Vertical):
@@ -27,11 +27,28 @@ class MainMenu(Screen):
         yield Header(name="PokePy Team Builder")
         yield Footer()
 
-class PokePyApp(App):
+    def on_button_pressed(self, event: Button.Pressed) -> None:
+        if event.button.id == "q_pokemon":
+            self.app.push_screen("query")
+
+class QueryMenu(Screen):
+    def compose(self) -> ComposeResult:
+        yield Label("Enter a Pokemon name you want to query:")
+        yield Input(placeholder="e.g.: Ditto")
+
+    def on_input_submitted(self, event: Input.Submitted) -> None:
+        
+
+
+class TogePyApp(App):
     """PokePy Team Builder: Main TUI App entry point"""
     BINDINGS = [("ctrl+q", "quit", "Quit PokePy")]
+    SCREENS = {
+        "main": MainMenu,
+        "query": QueryMenu}
 
     def on_mount(self) -> None:
+        self.push_screen("main")
         self.theme = "gruvbox"
         self.title = "PokePy: A Pokemon Team Builder"
 
@@ -39,5 +56,5 @@ class PokePyApp(App):
         self.exit()
 
 if __name__ == "__main__":
-    app = PokePyApp()
+    app = TogePyApp()
     app.run()

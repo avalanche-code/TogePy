@@ -1,3 +1,9 @@
-#from togepy.tui.app import TogePyApp
+from togepy.tui.app import TogePyApp
 
-#def main():
+
+def main():
+    app = TogePyApp()
+    app.run()
+
+if __name__ == "__main__":
+    main()
