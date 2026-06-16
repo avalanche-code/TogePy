@@ -26,3 +26,14 @@ preview = true
 #"E" for pycodestyle, beide machen Line too long oder "not enough blanks"
 [tool.ruff.lint]
 select = ["F", "I", "B", "UP", "PL"]
+
+#project root manuell, wenn nicht in sys.path drin dann dazu fügen
+#uv pytest doesnt find module
+#ohne das fehlermeldung
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
+#uv run main.py
+#conftest.py, standard of pytest, fixtures, etc, oder diesen Hack

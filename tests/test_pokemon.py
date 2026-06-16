@@ -1,6 +1,6 @@
-from togepy.main import query_pokemon_debug as qpd
+from togepy.main import query_pokemon_debug
 
 
-def test_qp():
-    returnvalue = qpd("ditto")
+def test_query_pokemon_debug():
+    returnvalue = query_pokemon_debug("ditto")
     assert returnvalue == ["limber", ["limber", "imposter"]]

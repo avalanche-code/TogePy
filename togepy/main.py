@@ -1,4 +1,4 @@
-from modules.helpers import (
+from togepy.helpers import (
     APICaller,
     clearconsole,
 )
