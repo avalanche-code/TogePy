@@ -1,7 +1,7 @@
 [project]
 name = "togepy"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Pokemon Team Builder. Written in Python, TUI made with Textual."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
@@ -37,3 +37,4 @@ pythonpath = [
 
 #uv run main.py
 #conftest.py, standard of pytest, fixtures, etc, oder diesen Hack
+#leere conftest.py im rootordner, dann wird syspath bei ausführen autmatisch gesetzt
