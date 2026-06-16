@@ -33,11 +33,21 @@ class MainMenu(Screen):
 
 class QueryMenu(Screen):
     def compose(self) -> ComposeResult:
-        yield Label("Enter a Pokemon name you want to query:")
-        yield Input(placeholder="e.g.: Ditto")
+        yield Horizontal(
+            Vertical(
+                Label(id="label1", content="Enter a Pokemon name you want to query:"),
+                Input(placeholder="e.g.: Ditto"),
+            ),
+            Vertical(Label(id="label2", content="Info will be displayed here")),
+        )
+        # instead of
+        # yield Label(id= "label1", content="Enter a Pokemon name you want to query:")
+        # yield Input(placeholder="e.g.: Ditto")
+        # yield Label(id= "label2", content="Info will be displayed here")
+        # if name in responses.key
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        
+        self.query_one("#label2", Label).update(f"You entered {event.value}")
 
 
 class TogePyApp(App):

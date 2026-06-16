@@ -12,6 +12,8 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "pytest-xdist>=3.8.0",
     "ruff>=0.15.12",
 ]
 
@@ -24,5 +26,3 @@ preview = true
 #"E" for pycodestyle, beide machen Line too long oder "not enough blanks"
 [tool.ruff.lint]
 select = ["F", "I", "B", "UP", "PL"]
-
-
