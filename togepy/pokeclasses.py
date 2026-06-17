@@ -23,3 +23,5 @@ class Pokemon:
 
     def __add__(self, other):
         raise ValueError
+
+    #danilo
