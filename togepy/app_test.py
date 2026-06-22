@@ -1,8 +1,8 @@
 from textual.app import App
 
-from tui.screens.main_menu import MainMenu
-from tui.screens.query_menu import QueryMenu
-from tui.screens.teams_menu import TeamsMenu
+from togepy.tui.screens.main_menu import MainMenu
+from togepy.tui.screens.query_menu import QueryMenu
+from togepy.tui.screens.teams_menu import TeamsMenu
 
 
 class PokePyApp(App):

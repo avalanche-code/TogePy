@@ -1,8 +1,8 @@
-from togepy.tui.app import TogePyApp
-
+from togepy.tui.app import TogePyApp    #Atas Version
+from togepy.app_test import PokePyApp   #Carls Version
 
 def main():
-    app = TogePyApp()
+    app = PokePyApp()
     app.run()
 
 if __name__ == "__main__":
