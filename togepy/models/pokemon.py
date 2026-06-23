@@ -5,12 +5,12 @@ class Pokemon:
                  maintype: str,
                  sectype: str,
                  ability: str,
-                 moves: list[str] = None
+                 moves: tuple = None
                  ):
 
         #This to prevent "argument is mutable" warning if this is default value, type already exists!
         if moves is None:
-            moves = ["/", "/", "/", "/"]
+            moves = ("/", "/", "/", "/")
         else:
             self.moves = moves
 
