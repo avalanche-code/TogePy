@@ -1,11 +1,12 @@
 from textual.app import App
 
+from togepy.tui.app_old import TogePyAppOld
 from togepy.tui.screens.main_menu import MainMenu
 from togepy.tui.screens.query_menu import QueryMenu
 from togepy.tui.screens.teams_menu import TeamsMenu
 
 
-class PokePyApp(App):
+class TogePyApp(App):
     """Main application entry point."""
 
     BINDINGS = [
@@ -29,5 +30,5 @@ class PokePyApp(App):
 
 
 if __name__ == "__main__":
-    app = PokePyApp()
+    app = TogePyApp()
     app.run()

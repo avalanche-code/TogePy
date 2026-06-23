@@ -50,7 +50,7 @@ class QueryMenu(Screen):
         self.query_one("#label2", Label).update(f"You entered {event.value}")
 
 
-class TogePyApp(App):
+class TogePyAppOld(App):
     """PokePy Team Builder: Main TUI App entry point"""
     BINDINGS = [("ctrl+q", "quit", "Quit PokePy")]
     SCREENS = {
@@ -66,5 +66,5 @@ class TogePyApp(App):
         self.exit()
 
 if __name__ == "__main__":
-    app = TogePyApp()
+    app = TogePyAppOld()
     app.run()
