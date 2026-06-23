@@ -1,4 +1,4 @@
-from togepy.main import query_pokemon_debug
+from togepy.main_old import query_pokemon_debug
 
 
 def test_query_pokemon_debug():

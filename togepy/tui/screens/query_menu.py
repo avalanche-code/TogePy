@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Input, Label
-from togepy.helpers import APICaller
+from togepy.api.api import APICaller
 
 # instancing object of api caller class. keeps connection open
 my_apicaller = APICaller()
