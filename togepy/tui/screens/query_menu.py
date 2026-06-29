@@ -63,7 +63,7 @@ class QueryMenu(Screen):
         ]
 
         first_ability = abilities[0] if abilities else "None"
-
+        # TO-DO: create a pokemon object with the data and display it in the info label
         info.update(
             f"Name: {data['name']}\n"
             f"First ability: {first_ability}\n"

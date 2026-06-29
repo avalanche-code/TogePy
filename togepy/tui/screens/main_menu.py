@@ -12,10 +12,6 @@ class MainMenu(Screen):
 
         yield Horizontal(
             Vertical(
-                Label("Welcome to PokePy Team Builder!"),
-                Label("Select an option:"),
-            ),
-            Vertical(
                 Button(
                     "🔍 Query Pokemon",
                     id="query_pokemon",
@@ -32,6 +28,11 @@ class MainMenu(Screen):
                     disabled=True,
                 ),
             ),
+            Vertical(
+                Label("Welcome to PokePy Team Builder!"),
+                Label("Select an option:"),
+            ),
+            
         )
 
         yield Footer()
