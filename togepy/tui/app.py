@@ -1,6 +1,6 @@
 from textual.app import App
 
-from togepy.tui.app_old import TogePyAppOld
+#from togepy.tui.app_old import TogePyAppOld
 from togepy.tui.screens.main_menu import MainMenu
 from togepy.tui.screens.query_menu import QueryMenu
 from togepy.tui.screens.teams_menu import TeamsMenu

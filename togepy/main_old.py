@@ -4,7 +4,7 @@ from togepy.api.api import (
 )
 
 # instancing object of api caller class. keeps connection open
-my_apicaller = APICaller()
+my_apicaller = APICaller()      #TODO: Think about where to init an APICaller, give functions?
 
 
 def main():
