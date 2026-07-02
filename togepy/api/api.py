@@ -72,7 +72,6 @@ def sanitize_dict(api_reply: dict) -> dict:
         poke_dict["sectype"] = None
 
     return poke_dict
-    #TODO: This function gets output of query, parses into dict thats easier to handle
 
 def init_pokemon_obj(poke_dict: dict) -> Pokemon:
         pokemon = Pokemon(
@@ -82,4 +81,3 @@ def init_pokemon_obj(poke_dict: dict) -> Pokemon:
             poke_dict.get("sectype"))
 
         return pokemon
-    #TODO: This function get sanitized output, parses into new pokemon object
