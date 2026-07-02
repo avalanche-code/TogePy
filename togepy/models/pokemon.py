@@ -1,10 +1,9 @@
 class Pokemon:
     def __init__(self, pokedex_id: int,
                  name: str,
-                 gender: str,
                  maintype: str,
                  sectype: str,
-                 ability: str,
+                 ability: str = None,
                  moves: tuple = None
                  ):
 
@@ -16,7 +15,6 @@ class Pokemon:
 
         self.pokedex_id = pokedex_id
         self.name = name
-        self.gender = gender
         self.maintype = maintype
         self.sectype = sectype
         self.ability = ability

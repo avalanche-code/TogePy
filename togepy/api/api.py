@@ -2,6 +2,8 @@ from os import name as os_name
 from subprocess import call
 
 import httpx
+import json
+from togepy.models.pokemon import Pokemon
 
 
 #single response principle
@@ -14,12 +16,12 @@ class APICaller:
         self.base_url = "https://pokeapi.co/api/v2/pokemon/"
         self.session1 = httpx.Client()                          #Client() of httpx instead of requests' session()
 
-    def get_pokemon_name(self, name):
+    def get_pokemon_name(self, name) -> dict:
         result = self.session1.get(self.base_url + name)
         if result.is_error:                                 #TODO: Check which error, errormsg corresponding to error
             raise ValueError("Pokemon name not found")
         else:
-            return result.json()
+            return json.loads(result.json())
 
 
 def query_pokemon(query_poke: str, apicaller: APICaller):   #TODO: default values where? code that instance is always default
@@ -55,8 +57,29 @@ def query_pokemon(query_poke: str, apicaller: APICaller):   #TODO: default value
 
 
 
-def sanitize_dict():
-    pass    #TODO: This function gets output of query, parses into dict thats easier to handle
+def sanitize_dict(api_reply: dict) -> dict:
+    poke_dict = {"poke_id": None,
+                 "name": None,
+                 "maintype": None,
+                 "sectype": None}
+    poke_dict["poke_id"] = api_reply["id"]
+    poke_dict["name"] = api_reply["name"]
+    poke_dict["type"] = api_reply["types"][0]["type"]["name"]
 
-def init_pokemon_obj():
-    pass    #TODO: This function get sanitized output, parses into new pokemon object
+    if len(api_reply["types"]) > 1:
+        poke_dict["sectype"] = api_reply["types"][1]["type"]["name"]
+    else:
+        poke_dict["sectype"] = None
+
+    return poke_dict
+    #TODO: This function gets output of query, parses into dict thats easier to handle
+
+def init_pokemon_obj(poke_dict: dict) -> Pokemon:
+        pokemon = Pokemon(
+            poke_dict["poke_id"],
+            poke_dict["name"],
+            poke_dict["maintype"],
+            poke_dict.get("sectype"))
+
+        return pokemon
+    #TODO: This function get sanitized output, parses into new pokemon object
