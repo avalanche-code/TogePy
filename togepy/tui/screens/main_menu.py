@@ -43,7 +43,7 @@ class MainMenu(Screen):
                 self.app.push_screen("query")
 
             case "teams":
-                self.app.push_screen("teams")
+                self.app.push_screen("teamsmenu")
 
             case "settings":
                 pass

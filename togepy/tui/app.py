@@ -4,6 +4,7 @@ from textual.app import App
 from togepy.tui.screens.main_menu import MainMenu
 from togepy.tui.screens.query_menu import QueryMenu
 from togepy.tui.screens.teams_menu import TeamsMenu
+#from togepy.tui.screens.teams_view import TeamsView if done then uncomment TODO
 
 
 class TogePyApp(App):
@@ -16,7 +17,8 @@ class TogePyApp(App):
     SCREENS = {
         "main": MainMenu,
         "query": QueryMenu,
-        "teams": TeamsMenu,
+        "teamsmenu": TeamsMenu,
+        #"teamsview": TeamsView if done then uncomment TODO
     }
 
     def on_mount(self) -> None:
@@ -28,7 +30,7 @@ class TogePyApp(App):
     def action_quit(self) -> None:
         self.exit()
 
-
-if __name__ == "__main__":
-    app = TogePyApp()
-    app.run()
+#Entry point is in togepy.__main__
+# if __name__ == "__main__":
+#     app = TogePyApp()
+#     app.run()
