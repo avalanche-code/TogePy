@@ -1,38 +1,60 @@
 from textual.app import ComposeResult
-from textual.containers import Horizontal, Vertical
+from textual.containers import Container, Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label
+from textual.widgets import Button, Footer, Header, Label, Static
 
+
+GREETING = ("Welcome to TogePy Team Builder!\n\nIn this application you can manage "
+          "and build Pokemon Teams using data queried from the 'PokeAPI', a popular RESTful API for getting "
+          "Pokemon-related information.\n\nPlease select an option:")
 
 class MainMenu(Screen):
     """Main menu of the application."""
+    #left and right or only right? margin or padding
+    CSS = """
+    Static {
+        padding-right: 1;
+        padding-left: 1;
+    }
+    Horizontal {
+        margin-top: 1;
+    }
+    Container {
+        align: center top;
+    }
+    Button {
+        width: 50%;
+        content_align: center middle;
+    }
+    """
+
 
     def compose(self) -> ComposeResult:
         yield Header()
 
         yield Horizontal(
             Vertical(
-                Button(
-                    "🔍 Query Pokemon",
-                    id="query_pokemon",
-                    variant="primary",
-                ),
-                Button(
-                    "👥 Teams",
-                    id="teams",
-                    variant="primary",
-                ),
-                Button(
-                    "⚙️ Settings",
-                    id="settings",
-                    disabled=True,
-                ),
+                Container(
+                    Button(
+                        "🔍 Query Pokemon",
+                        id="query_pokemon",
+                        variant="primary",
+                    ),
+                    Button(
+                        "👥 Teams",
+                        id="teams",
+                        variant="primary",
+                    ),
+                    Button(
+                        "⚙️ Settings",
+                        id="settings",
+                        disabled=True,
+                    )
+                )
             ),
             Vertical(
-                Label("Welcome to PokePy Team Builder!"),
-                Label("Select an option:"),
+                Static(GREETING, classes="wrap", id="greeting")
             ),
-            
         )
 
         yield Footer()

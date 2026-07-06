@@ -4,7 +4,6 @@ from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Input, Label
 
 from togepy.api.api import APICaller, init_pokemon_obj, sanitize_dict
-from togepy.models.pokemon import teams
 
 # instancing object of api caller class. keeps connection open
 my_apicaller = APICaller()
@@ -23,13 +22,13 @@ class QueryMenu(Screen):
                     id="pokemon_input",
                 ),
                 Button(
-                    "⬅ Back",
-                    id="back",
-                ),
-                Button(
                     label="➕ Add to Team",
                     id="add_toteam",
                     disabled=True
+                ),
+                Button(
+                    "⬅ Back",
+                    id="back",
                 )
             ),
             Vertical(
@@ -74,7 +73,7 @@ class QueryMenu(Screen):
             f"First ability: {poke_candidate.ability}\n"
             #f"All abilities: {abilities}"
         )
-        if teams:
+        if self.app.teams_inapp:
             add_button.disabled = False
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

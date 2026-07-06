@@ -1,3 +1,5 @@
+from textual.reactive import reactive
+
 class Pokemon:
     def __init__(self, pokedex_id: int,
                  name: str,
@@ -24,6 +26,6 @@ class PokeTeam:
         self.team_name = team_name
         self.pokemons = []                  #List here or 6 pokemon objects
 
-teams = [] #Ist hier der richtige ort um die variable anzulegen und zu importieren?
-team1 = PokeTeam("Team 1")#test
-teams.append(team1)#test
+#teams = [] #Ist hier der richtige ort um die variable anzulegen und zu importieren?
+#team1 = PokeTeam("Team 1")#test
+#teams.append(team1)#test
