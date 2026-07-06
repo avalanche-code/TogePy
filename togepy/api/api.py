@@ -59,3 +59,13 @@ def change_ability(api_caller: APICaller, pokemon: Pokemon) -> list:
         abilities.append(ability["ability"]["name"])
 
     return abilities
+
+def change_moves(api_caller: APICaller, pokemon: Pokemon) -> list:
+    reply = api_caller.get_pokemon_name(pokemon.name)
+    poke_moves = reply["moves"]
+    moves = []
+
+    for move in poke_moves:
+        moves.append(move["move"]["name"])
+
+    return moves
