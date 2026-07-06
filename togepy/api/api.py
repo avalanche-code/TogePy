@@ -39,13 +39,17 @@ def sanitize_dict(api_reply: dict) -> dict:
     return poke_dict
 
 def init_pokemon_obj(poke_dict: dict) -> Pokemon:
-        pokemon = Pokemon(
-            poke_dict["poke_id"],
-            poke_dict["name"],
-            poke_dict["maintype"],
-            # TODO: Hier try-except
-            # poke_dict.get("sectype"))   #We know what to expect, so its ok, aber nicht gebraucht, ist immer da
-            poke_dict["sectype"]
-        )
+    pokemon = Pokemon(
+        poke_dict["poke_id"],
+        poke_dict["name"],
+        poke_dict["maintype"],
+        # poke_dict.get("sectype"))   #We know what to expect, so its ok, aber nicht gebraucht, ist immer da
+        poke_dict["sectype"]
+    )
 
-        return pokemon
+    return pokemon
+
+#maybe cache per pokemon and check if queried before and list of attacks/abilities exists
+def change_ability(api_caller: APICaller, pokemon: Pokemon) -> list:
+    #TODO: make api call for given pokemon, so query pokemon.name, take all abilities, return abilities as list
+    pass
