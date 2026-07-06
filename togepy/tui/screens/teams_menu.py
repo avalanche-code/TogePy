@@ -1,7 +1,7 @@
 from textual.app import ComposeResult
 from textual.containers import Container, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label
+from textual.widgets import Button, Footer, Header, Label, Static
 from togepy.tui.screens.delete_team import DeleteTeamScreen
 
 
@@ -9,14 +9,26 @@ class TeamsMenu(Screen):
     """Team management menu."""
 
     CSS = """
+    Label {
+        width: 100%;
+        align: center top;
+        text-align: center;
+    }
     Container {
         align: center top;
+        content-align: center top;
         width: 100%;
+        margin-top: 1
+    }
+    Button {
+        width: 25%;
+        content-align: center middle;
     }
     """
 
     def compose(self) -> ComposeResult:
         yield Header()
+
         yield Container(
             Label("Team Management Screen\n"),
             Button(
