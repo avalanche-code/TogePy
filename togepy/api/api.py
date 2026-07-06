@@ -51,5 +51,11 @@ def init_pokemon_obj(poke_dict: dict) -> Pokemon:
 
 #maybe cache per pokemon and check if queried before and list of attacks/abilities exists
 def change_ability(api_caller: APICaller, pokemon: Pokemon) -> list:
-    #TODO: make api call for given pokemon, so query pokemon.name, take all abilities, return abilities as list
-    pass
+    reply = api_caller.get_pokemon_name(pokemon.name)
+    poke_ability = reply["abilities"]
+    abilities = []
+
+    for ability in poke_ability:
+        abilities.append(ability["ability"]["name"])
+
+    return abilities
