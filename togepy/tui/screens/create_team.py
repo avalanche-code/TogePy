@@ -7,7 +7,6 @@ from togepy.models.pokemon import PokeTeam
 
 
 #Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
-
 def refresh_teams_prompt(self, teams: list) -> str:
     if not self.app.teams_inapp:
         return "No Teams created."
@@ -50,12 +49,10 @@ class CreateTeamScreen(Screen):
                     refresh_teams_prompt(self, self.app.teams_inapp),
                     id="teams_info",
                 )
-            ),
+            )
         )
 
         yield Footer()
-
-
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
         al_ex_flag = 0
@@ -71,7 +68,7 @@ class CreateTeamScreen(Screen):
         if al_ex_flag:
             warning.update("Team Name already exists. '-new' will be appended to name")
 
-        self.app.teams_inapp = self.app.teams_inapp + [PokeTeam(team_name_suggest)] #in neuem button. suggestion that reference needs to be updated for reactive
+        self.app.teams_inapp += [PokeTeam(team_name_suggest)] #in neuem button. suggestion that reference needs to be updated for reactive
         info.update(refresh_teams_prompt(self, self.app.teams_inapp))
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

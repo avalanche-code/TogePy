@@ -2,23 +2,26 @@ from textual.app import ComposeResult
 from textual.containers import Container, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
+
+from togepy.tui.screens.create_team import CreateTeamScreen
 from togepy.tui.screens.delete_team import DeleteTeamScreen
 
 
 class TeamsMenu(Screen):
     """Team management menu."""
 
+    #Header isnt centered with Label? Idk why not. seperate label already has margin to next container? wegen \n
     CSS = """
     Label {
         width: 100%;
         align: center top;
-        text-align: center;
+        content-align: center top;
+        margin-top: 1;
     }
     Container {
         align: center top;
         content-align: center top;
         width: 100%;
-        margin-top: 1
     }
     Button {
         width: 25%;
@@ -28,9 +31,8 @@ class TeamsMenu(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
-
+        yield Label("What do you want to do?\n")
         yield Container(
-            Label("Team Management Screen\n"),
             Button(
                 "📋 View Teams",
                 id="view_teams",
@@ -62,10 +64,10 @@ class TeamsMenu(Screen):
                 self.app.push_screen("team_list")
 
             case "create_team":
-                self.app.push_screen("createteamscreen")    #create_team
+                self.app.push_screen(CreateTeamScreen())    #create_team
 
             case "delete_team":
-                # hack: destroying screen and always new building so that mount gets used
+                # "hack": destroying screen and always new building so that mount gets used, speicheroptimierung?
                 self.app.push_screen(DeleteTeamScreen())
 
             case "back":

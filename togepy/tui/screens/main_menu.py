@@ -12,6 +12,9 @@ class MainMenu(Screen):
     """Main menu of the application."""
     #left and right or only right? margin or padding
     CSS = """
+    Header {
+        content-align: center middle;
+    }
     Static {
         padding-right: 1;
         padding-left: 1;
@@ -24,7 +27,7 @@ class MainMenu(Screen):
     }
     Button {
         width: 50%;
-        content_align: center middle;
+        content-align: center middle;
     }
     """
 

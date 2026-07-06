@@ -1,4 +1,3 @@
-
 from textual import events
 from textual.app import ComposeResult
 from textual.containers import Container, Horizontal, Vertical
@@ -42,13 +41,18 @@ class DeleteTeamScreen(Screen):
                     refresh_teams_prompt(self, self.app.teams_inapp),
                     id="allteams",
         )
+        yield Container(id="teams_collapsible")
         yield Footer()
 
     def on_mount(self):
         self.query_one("#allteams", Label).update(refresh_teams_prompt(self, self.app.teams_inapp))
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        self.query_one("#allteams", Label).update(event.value)
+        allteams = self.query_one("#allteams", Label)
+        to_delete = event.value.strip().title()
+        for team in self.app.teams_inapp:
+            if team.team_name == to_delete:
+                pass #implement warning and stuff as in create team, then in create team ensure that mechanism of new screen gets used. collapsibles in view
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
