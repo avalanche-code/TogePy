@@ -21,7 +21,8 @@ function App() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const[isFound, setIsFound] = useState(true);
+  const [isFound, setIsFound] = useState(true);
+  const [saveEnabled, setSaveEnabled] = useState(false);
 
   function capitalize(s: string) {
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
@@ -62,6 +63,7 @@ function App() {
 
       setPokemon(mapped);
       setIsFound(true);
+      setSaveEnabled(true);
     } catch (err: unknown) {
       console.error(err);
       if (err instanceof Error) {
@@ -76,6 +78,7 @@ function App() {
   }
 
   async function savePokemon(pokemon: Pokemon) {
+    setSaveEnabled(false);
     setSavedPokemon((prev) => [...prev, pokemon]);
   }
 
@@ -84,16 +87,16 @@ function App() {
       Find a Pokemon
     </div><div className="max-w-md mx-auto mt-10">
 
-      <div className="mx-auto mt-8 max-w-lg">
-      <SearchBar
-        value={search}
-        onChange={setSearch}
-        onSearch={searchPokemon}
-        placeholder="Search Pokémon..."
-      />
+        <div className="mx-auto mt-8 max-w-lg">
+          <SearchBar
+            value={search}
+            onChange={setSearch}
+            onSearch={searchPokemon}
+            placeholder="Search Pokémon..."
+          />
 
-      <p className="mt-4">Searching for: {search}</p>
-    </div>
+          <p className="mt-4">Searching for: {search}</p>
+        </div>
         {loading ? (
           <p className="mt-4">Loading...</p>
         ) : isFound ? (
@@ -113,10 +116,19 @@ function App() {
                   ))}
                 </ul>
 
-                <button className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-                onClick={() => savePokemon(pokemon)}>
-                  Save
-                </button>
+                <div>
+                  
+                  <button
+                    className={`mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white  }`}
+                    disabled={!saveEnabled}
+                    onClick={() => savePokemon(pokemon)}
+                   // hand cursor only when saveEnabled is true
+                    style={{ cursor: saveEnabled ? 'pointer' : 'not-allowed' }}
+                  >
+                    Save
+                  </button>
+                  {!saveEnabled ? (<p className="text-red-600 text-sm" >Save disabled make a search first</p>) : null}
+                </div>
               </div>
 
               {pokemon.image ? (
@@ -135,16 +147,16 @@ function App() {
         )}
 
         <div className="flex items-center justify-center  text-4xl mt-10" >
-      Your saved Pokémon
-    </div>
+          Your saved Pokémon
+        </div>
         {savedPokemon.length > 0 ? (
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {savedPokemon.map((p, index) => (
               <Card
                 key={index}
                 title={p.name}
-                subtitle={`${p.gender} • ${p.type}`}      
-          >
+                subtitle={`${p.gender} • ${p.type}`}
+              >
                 <div className="md:flex md:items-center md:justify-between">
                   <div className="md:w-2/3">
                     <p className="text-gray-700">
