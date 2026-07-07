@@ -3,12 +3,14 @@ import { Search } from "lucide-react";
 type SearchBarProps = {
   value: string;
   onChange: (value: string) => void;
+  onSearch: () => void;
   placeholder?: string;
 };
 
 export default function SearchBar({
   value,
   onChange,
+  onSearch,
   placeholder = "Search...",
 }: SearchBarProps) {
   return (
@@ -22,6 +24,11 @@ export default function SearchBar({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onSearch();
+          }
+        }}
         placeholder={placeholder}
         className="
           w-full
