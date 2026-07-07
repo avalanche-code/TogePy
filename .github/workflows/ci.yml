@@ -1,100 +1,120 @@
-name: CI Pipeline
+name: CI/CD Pipeline
+
 on:
-  push: 
-    branches: [ reactFrontend ]
+  push:
+    branches: [reactFrontend]
   pull_request:
-    branches: [ reactFrontend ]
+    branches: [reactFrontend]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
+
   lint:
     name: Linting
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./togepy/react/togePy
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Cache npm dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install dependencies
-      run: npm ci
-    - name: Run ESLint
-      run: npm run lint
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ./togepy/react/togePy/package-lock.json
+
+      - run: npm ci
+      - run: npm run lint
+
 
   build:
-    name: Build & Type Check
+    name: Build Frontend
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./togepy/react/togePy
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Cache npm dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-artifacts
-        path: ./togepy/react/togePy/dist/
-        retention-days: 5
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ./togepy/react/togePy/package-lock.json
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./togepy/react/togePy/dist/
+
 
   test:
     name: Playwright Tests
     runs-on: ubuntu-latest
-    needs: build
-    timeout-minutes: 60
+    needs:
+      - lint
+      - build
+
     defaults:
       run:
         working-directory: ./togepy/react/togePy
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Cache npm dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Chromium
-      run: npx playwright install --with-deps chromium
-    - name: Run Playwright tests
-      run: npx playwright test --project=chromium
-    - name: Upload Playwright Report
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: ./togepy/react/togePy/playwright-report/
-        retention-days: 30
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: test-results
-        path: ./togepy/react/togePy/test-results/
-        retention-days: 30
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: ./togepy/react/togePy/package-lock.json
+
+      - run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright
+        run: npx playwright test
+
+
+  deploy:
+    name: Deploy GitHub Pages
+    runs-on: ubuntu-latest
+
+    needs:
+      - test
+
+    environment:
+      name: github-pages
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./dist
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy
+        uses: actions/deploy-pages@v4
