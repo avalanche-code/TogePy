@@ -21,11 +21,6 @@ class Pokemon:
         raise ValueError
 
 class PokeTeam:
-    #def __init__(self, pokemon: Pokemon):
     def __init__(self, team_name: str):
         self.team_name = team_name
         self.pokemons = []                  #List here or 6 pokemon objects
-
-#teams = [] #Ist hier der richtige ort um die variable anzulegen und zu importieren?
-#team1 = PokeTeam("Team 1")#test
-#teams.append(team1)#test

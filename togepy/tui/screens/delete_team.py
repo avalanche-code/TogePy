@@ -1,14 +1,15 @@
-from textual import events
 from textual.app import ComposeResult
-from textual.containers import Container, Horizontal, Vertical
-from textual.events import Show
-from textual.reactive import reactive
+from textual.containers import Container, Horizontal, Vertical, HorizontalScroll, VerticalScroll
+from textual.css.query import NoMatches
 from textual.screen import Screen
 from textual.widgets import Button, Collapsible, Footer, Header, Input, Label, Static
 
 from togepy.models.pokemon import PokeTeam
+import base64
 
 
+
+#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
 def refresh_teams_prompt(self, teams: list) -> str:
     if not self.app.teams_inapp:
         return "No Teams created."
@@ -18,8 +19,28 @@ def refresh_teams_prompt(self, teams: list) -> str:
         prompt += team.team_name + "\n"
     return prompt
 
-#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
+#margin außerhalb, padding innerhalb
 class DeleteTeamScreen(Screen):
+    CSS = """
+    Header {
+        margin-bottom: 1;
+    }
+    Input {
+        margin-top: 1;
+        margin-bottom: 1;
+    }
+    VerticalScroll {
+        width: 100%;
+        align: center bottom;
+    }
+    Footer {
+        margin-top: 1;
+    }
+        Static {
+        align: center middle;
+        padding-left: 1;
+    }
+    """
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -31,32 +52,53 @@ class DeleteTeamScreen(Screen):
                     placeholder="team name here :(",
                     id="teamname_input",
                 ),
-                Button(
+                Horizontal(
+                    Button(
                         "⬅ Back",
                         id="back",
+                    ),
+                    Static(
+                        "", 
+                        id="warning_static"
+                    )
+                )
                 )
             )
-        )
-        yield Label(
-                    refresh_teams_prompt(self, self.app.teams_inapp),
-                    id="allteams",
-        )
-        yield Container(id="teams_collapsible")
+        yield VerticalScroll(id="teams_container")
         yield Footer()
 
     def on_mount(self):
-        self.query_one("#allteams", Label).update(refresh_teams_prompt(self, self.app.teams_inapp))
+        #self.query_one("#allteams", Label).update(refresh_teams_prompt(self, self.app.teams_inapp))
+        teams_container = self.query_one("#teams_container", VerticalScroll)
+
+        if not self.app.teams_inapp:
+            teams_container.mount(Label("No Teams created.")) #no other logic like try except needed for querying if label is shown then hide and then make new collapsibles below
+
+        for team in self.app.teams_inapp:
+            teams_container.mount(Collapsible(Static("Team members here"), collapsed=True, title=team.team_name, id="b64-"+str(base64.b16encode(team.team_name.encode("utf-8")))[2:-1]))
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        allteams = self.query_one("#allteams", Label)
+        teams_container = self.query_one("#teams_container", VerticalScroll)
+        warning = self.query_one("#warning_static", Static)
         to_delete = event.value.strip().title()
-        for team in self.app.teams_inapp:
-            if team.team_name == to_delete:
-                pass #implement warning and stuff as in create team, then in create team ensure that mechanism of new screen gets used. collapsibles in view
+
+        #Es wurde ja sichergestellt dass Pro element in teamslist hier ein collapsible ist, demnach kann ich ohne prüfung auch das element aus liste löschen
+        #durch die erstellung des collapsible wissen wir ja dass es das gibt.
+        try:
+            collapsible_hit = self.query_one(f"#{'b64-' + str(base64.b16encode(to_delete.encode("utf-8")))[2:-1]}", Collapsible)
+        except NoMatches:
+            warning.update("Team Name not found.")
+            return
+        else:
+            collapsible_hit.remove()
+            warning.update(f"Team {to_delete} deleted.")
+            #erste erscheinung reicht, da keine zwei einträge mit gleichem namen da sien kann, remember nasim and burger
+            for team in self.app.teams_inapp:
+                if team.team_name == to_delete:
+                    self.app.teams_inapp.remove(team)
+                    return  #so? oder lieber fertig laufen lassen
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "back":
                 self.app.pop_screen() #Since this screen is a new instance it gets destroyed at pop
-            case "create_team_button":
-                pass    #hinzufügen über button oder enter drücken

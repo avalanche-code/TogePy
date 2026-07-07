@@ -2,6 +2,7 @@ from textual.app import ComposeResult
 from textual.containers import Container, Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, Static
+from togepy.tui.screens.query_menu import QueryMenu
 
 
 GREETING = ("Welcome to TogePy Team Builder!\n\nIn this application you can manage "
@@ -15,7 +16,7 @@ class MainMenu(Screen):
     Header {
         content-align: center middle;
     }
-    Static {
+    Vertical {
         padding-right: 1;
         padding-left: 1;
     }
@@ -65,7 +66,7 @@ class MainMenu(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:
             case "query_pokemon":
-                self.app.push_screen("query")
+                self.app.push_screen(QueryMenu())   #abuse mount() for list initiation
 
             case "teams":
                 self.app.push_screen("teamsmenu")

@@ -17,6 +17,7 @@ class TeamsMenu(Screen):
         align: center top;
         content-align: center top;
         margin-top: 1;
+        margin-bottom: 1;
     }
     Container {
         align: center top;
@@ -31,7 +32,7 @@ class TeamsMenu(Screen):
 
     def compose(self) -> ComposeResult:
         yield Header()
-        yield Label("What do you want to do?\n")
+        yield Label("What do you want to do?")
         yield Container(
             Button(
                 "📋 View Teams",

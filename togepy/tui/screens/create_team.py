@@ -11,12 +11,31 @@ def refresh_teams_prompt(self, teams: list) -> str:
     if not self.app.teams_inapp:
         return "No Teams created."
 
-    prompt = "Existing Teams:\n"
+    prompt = "Existing Teams:\n\n"
     for team in self.app.teams_inapp:
         prompt += team.team_name + "\n"
     return prompt
 
 class CreateTeamScreen(Screen):
+
+    CSS = """
+    Header {
+        margin-bottom: 1;
+    }
+    Input {
+        margin-top: 1;
+        margin-bottom: 1;
+        width: 100%;
+    }
+    Vertical {
+        padding-left: 1;
+        padding-right: 1;
+    }
+    Static {
+        align: center middle;
+        padding-left: 1;
+    }
+    """
     def compose(self) -> ComposeResult:
         yield Header()
 
@@ -24,7 +43,7 @@ class CreateTeamScreen(Screen):
             Vertical(
                 Label("Enter a Team Name:"),
                 Input(
-                    placeholder="team name here :3",
+                    placeholder="team name here :3 ('Enter to submit')",
                     id="teamname_input",
                 ),
                 Horizontal(
@@ -32,24 +51,15 @@ class CreateTeamScreen(Screen):
                         "⬅ Back",
                         id="back",
                     ),
-                    Button(
-                        label="➕ Create Team",
-                        id="create_team_button",
-                        disabled=True
-                    )
+                    Static(content="", id="rename_warning", classes="wrap"),
                 ),
-                Static(
-                    content="",
-                    id="rename_warning",
-                    classes="wrap"
-                )
-            ),
+            id="leftside"),
             Vertical(
                 Label(
                     refresh_teams_prompt(self, self.app.teams_inapp),
                     id="teams_info",
                 )
-            )
+            ),
         )
 
         yield Footer()
@@ -57,16 +67,28 @@ class CreateTeamScreen(Screen):
     def on_input_submitted(self, event: Input.Submitted) -> None:
         al_ex_flag = 0
         team_name_suggest = event.value.strip().title()
+
         info = self.query_one("#teams_info", Label)
         warning = self.query_one("#rename_warning", Static)
 
+        if not team_name_suggest:
+            warning.update("Warning:\nno blankies ://")
+            return
+
         for team in self.app.teams_inapp:
             if team.team_name == team_name_suggest:
-                team_name_suggest += "-new" #Hier namechecker logic oder so, prompt to rename, hinweis
+                #team_name_suggest += "-new" #Hier namechecker logic oder so, prompt to rename, hinweis
+                #I don't know why this worked to produce -new-new
+                #geht ein team weiter prüft dann auf -new, sieht gibt, noch ein new dran
+                #somehow aber wenn ich a entfernt hab ging a-new nicht entfernbar. dann konnte ich neues a und a-new erstellen,
+                #war dann zweimal da... i dont fucking know wtf is happening tbh
+                #duplicate entries in teamslist
                 al_ex_flag = 1
 
         if al_ex_flag:
-            warning.update("Team Name already exists. '-new' will be appended to name")
+            #warning.update("Team Name already exists. '-new' will be appended to name")
+            warning.update("Warning:\nTeam Name already exists...\nThink of something new!")
+            return #this doesnt rename automatically. maybe fix some other time
 
         self.app.teams_inapp += [PokeTeam(team_name_suggest)] #in neuem button. suggestion that reference needs to be updated for reactive
         info.update(refresh_teams_prompt(self, self.app.teams_inapp))
