@@ -8,7 +8,7 @@ from togepy.tui.screens.delete_team import DeleteTeamScreen
 
 
 class TeamsMenu(Screen):
-    """Team management menu."""
+    """Team management menu"""
 
     #Header isnt centered with Label? Idk why not. seperate label already has margin to next container? wegen \n
     CSS = """
