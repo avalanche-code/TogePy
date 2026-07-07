@@ -1,10 +1,20 @@
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Input, Label, ListView, ListItem, OptionList, Static
+from textual.widgets import (
+    Button,
+    Footer,
+    Header,
+    Input,
+    Label,
+    OptionList,
+    Static,
+)
 from textual.widgets.option_list import Option
 
 from togepy.api.api import APICaller, init_pokemon_obj, sanitize_dict
+
+MAX_TEAM_SIZE = 6
 
 # instancing object of api caller class. keeps connection open
 my_apicaller = APICaller()
@@ -144,8 +154,8 @@ class QueryMenu(Screen):
                     #warnung kann ignoriert werden. wir haben garantiert immer nur options nach vorgegebenem Prinzip
                     for team in self.app.teams_inapp:
                         if team.team_name == teams_selector.highlighted_option.prompt:  #error handling if none? eig nicht benötigt
-                            if len(team.pokemons) == 6:    #früher checken? oder externe func. oder jeweils halt hioer bei add, sonstwo bei delete
-                                warning_static.update("DA SIND SCHON 6")
+                            if len(team.pokemons) == MAX_TEAM_SIZE:    #früher checken? oder externe func. oder jeweils halt hioer bei add, sonstwo bei delete
+                                warning_static.update(f"DA SIND SCHON {MAX_TEAM_SIZE}")
                                 return
 
                             #use cached version from above here... no new api call: done by using class var

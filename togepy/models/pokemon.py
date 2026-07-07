@@ -1,4 +1,3 @@
-from textual.reactive import reactive
 
 class Pokemon:
     def __init__(self, pokedex_id: int,

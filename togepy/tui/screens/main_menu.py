@@ -1,9 +1,9 @@
 from textual.app import ComposeResult
 from textual.containers import Container, Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Button, Footer, Header, Label, Static
-from togepy.tui.screens.query_menu import QueryMenu
+from textual.widgets import Button, Footer, Header, Static
 
+from togepy.tui.screens.query_menu import QueryMenu
 
 GREETING = ("Welcome to TogePy Team Builder!\n\nIn this application you can manage "
           "and build Pokemon Teams using data queried from the 'PokeAPI', a popular RESTful API for getting "
@@ -31,7 +31,6 @@ class MainMenu(Screen):
         content-align: center middle;
     }
     """
-
 
     def compose(self) -> ComposeResult:
         yield Header()

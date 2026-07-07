@@ -1,12 +1,15 @@
+import base64
+
 from textual.app import ComposeResult
-from textual.containers import Container, Horizontal, Vertical, HorizontalScroll, VerticalScroll
+from textual.containers import (
+    Container,
+    Horizontal,
+    Vertical,
+    VerticalScroll,
+)
 from textual.css.query import NoMatches
 from textual.screen import Screen
 from textual.widgets import Button, Collapsible, Footer, Header, Input, Label, Static
-
-from togepy.models.pokemon import PokeTeam
-import base64
-
 
 
 #Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
@@ -78,7 +81,7 @@ class DeleteTeamScreen(Screen):
             teams_container.mount(Collapsible(Static("Team members here"), collapsed=True, title=team.team_name, id="b64-"+str(base64.b16encode(team.team_name.encode("utf-8")))[2:-1]))
 
     def on_input_submitted(self, event: Input.Submitted) -> None:
-        teams_container = self.query_one("#teams_container", VerticalScroll)
+        #teams_container = self.query_one("#teams_container", VerticalScroll)
         warning = self.query_one("#warning_static", Static)
         to_delete = event.value.strip().title()
 

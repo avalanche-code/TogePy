@@ -7,8 +7,6 @@ from togepy.tui.screens.main_menu import MainMenu
 from togepy.tui.screens.query_menu import QueryMenu
 from togepy.tui.screens.teams_menu import TeamsMenu
 
-from togepy.models.pokemon import PokeTeam
-
 
 class TogePyApp(App):
     """Main application entry point."""

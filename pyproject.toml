@@ -21,7 +21,7 @@ dev = [
 #Custom Ruff Settings
 [tool.ruff]
 #Enable preview rules for linting
-preview = true
+preview = false
 #"PL" for pylint
 #"N" for pep8-naming
 #"E" for pycodestyle, beide machen Line too long oder "not enough blanks"
