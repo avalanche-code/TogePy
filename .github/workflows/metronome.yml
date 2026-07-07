@@ -31,6 +31,6 @@ jobs:
       - name: test everything with coverage and on steroids
         run: uv run pytest --cov -n auto
 
-      - name: run ruff linter and autofix soft problems
-        run: uv run ruff check --fix
+      - name: run ruff linter and NOT FIX pipeline stateless
+        run: uv run ruff check
       
