@@ -32,5 +32,5 @@ jobs:
         run: uv run pytest --cov -n auto
 
       - name: run ruff linter and autofix soft problems
-        run: uv run ruff --check --fix
+        run: uv run ruff check --fix
       
