@@ -85,7 +85,7 @@ function App() {
   return (
     <><div className="flex items-center justify-center  text-4xl">
       Find a Pokemon
-    </div><div className="max-w-md mx-auto mt-10">
+    </div><div className="mx-auto mt-10 max-w-5xl px-4">
 
         <div className="mx-auto mt-8 max-w-lg">
           <SearchBar
@@ -132,11 +132,11 @@ function App() {
               </div>
 
               {pokemon.image ? (
-                <div className="mt-6 md:mt-0 md:ml-6 md:w-1/3 flex justify-center">
+                <div className="mt-6 flex justify-center md:mt-0 md:ml-6 md:w-1/3">
                   <img
                     src={pokemon.image}
                     alt={`${pokemon.name} sprite`}
-                    className="h-32 w-32 object-contain"
+                    className="h-36 w-36 object-contain md:h-44 md:w-44"
                   />
                 </div>
               ) : null}
@@ -150,14 +150,15 @@ function App() {
           Your saved Pokémon
         </div>
         {savedPokemon.length > 0 ? (
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
             {savedPokemon.map((p, index) => (
               <Card
                 key={index}
                 title={p.name}
                 subtitle={`${p.gender} • ${p.type}`}
+                className="h-full min-h-[280px]"
               >
-                <div className="md:flex md:items-center md:justify-between">
+                <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="md:w-2/3">
                     <p className="text-gray-700">
                       {p.name} is a {p.type.toLowerCase()}-type Pokémon.
@@ -171,11 +172,11 @@ function App() {
                   </div>
 
                   {p.image ? (
-                    <div className="mt-6 md:mt-0 md:ml-6 md:w-1/3 flex justify-center">
+                    <div className="flex justify-center md:ml-6 md:w-1/3">
                       <img
                         src={p.image}
                         alt={`${p.name} sprite`}
-                        className="h-32 w-32 object-contain"
+                        className="h-36 w-36 object-contain md:h-44 md:w-44"
                       />
                     </div>
                   ) : null}
