@@ -40,7 +40,7 @@ function App() {
       );
 
       if (!response.ok) {
-        throw new Error("Pokemon not found");
+        throw new Error("Pokémon nicht gefunden");
       }
 
       const data = await response.json();
@@ -83,9 +83,9 @@ function App() {
   }
 
   return (
-    <><div className="flex items-center justify-center  text-4xl">
-      Find a Pokemon
-    </div><div className="mx-auto mt-10 max-w-5xl px-4">
+    <><h1 className="flex items-center justify-center  text-4xl" test-id="title">
+      Find a Pokémon
+    </h1><div className="mx-auto mt-10 max-w-5xl px-4">
 
         <div className="mx-auto mt-8 max-w-lg">
           <SearchBar
@@ -103,7 +103,7 @@ function App() {
           <Card
             title={pokemon.name}
             subtitle={`${pokemon.gender} • ${pokemon.type}`}
-          >
+          test-id="pokemon-card">
             <div className="md:flex md:items-center md:justify-between">
               <div className="md:w-2/3">
                 <p className="text-gray-700">
@@ -124,7 +124,7 @@ function App() {
                     onClick={() => savePokemon(pokemon)}
                    // hand cursor only when saveEnabled is true
                     style={{ cursor: saveEnabled ? 'pointer' : 'not-allowed' }}
-                  >
+                 id="save-button" >
                     Save
                   </button>
                   {!saveEnabled ? (<p className="text-red-600 text-sm" >Save disabled make a search first</p>) : null}
@@ -146,11 +146,11 @@ function App() {
           <p className="mt-4 text-red-600">{error || 'Pokémon nicht gefunden'}</p>
         )}
 
-        <div className="flex items-center justify-center  text-4xl mt-10" >
+        <h2 className="flex items-center justify-center  text-4xl mt-10" data-testid="title">
           Your saved Pokémon
-        </div>
+        </h2>
         {savedPokemon.length > 0 ? (
-          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3" data-testid="saved-pokemon-list">
             {savedPokemon.map((p, index) => (
               <Card
                 key={index}
