@@ -83,9 +83,10 @@ function App() {
   }
 
   return (
-    <><h1 className="flex items-center justify-center  text-4xl" test-id="title">
-      Find a Pokémon
-    </h1><div className="mx-auto mt-10 max-w-5xl px-4">
+    <><div className="flex items-center justify-center  text-4xl mt-15" test-id="title">
+     <h1>Find a Pokémon</h1>
+     <img src="./pokeball.svg" alt="Pokéball"  className="ml-4 max-w-10 h-auto"/>
+    </div><div className="mx-auto mt-10 max-w-5xl px-4">
 
         <div className="mx-auto mt-8 max-w-lg">
           <SearchBar
@@ -95,7 +96,7 @@ function App() {
             placeholder="Search Pokémon..."
           />
 
-          <p className="mt-4">Searching for: {search}</p>
+          <p className="m-5">Searching for: {search}</p>
         </div>
         {loading ? (
           <p className="mt-4">Loading...</p>
@@ -146,9 +147,9 @@ function App() {
           <p className="mt-4 text-red-600">{error || 'Pokémon nicht gefunden'}</p>
         )}
 
-        <h2 className="flex items-center justify-center  text-4xl mt-10" data-testid="title">
-          Your saved Pokémon
-        </h2>
+        <div className="flex items-center justify-center  text-4xl mt-10" data-testid="title">
+          <h2>Your saved Pokémon</h2>
+        </div>
         {savedPokemon.length > 0 ? (
           <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3" data-testid="saved-pokemon-list">
             {savedPokemon.map((p, index) => (
