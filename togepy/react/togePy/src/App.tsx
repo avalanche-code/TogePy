@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from './components/Card.tsx'
 import SearchBar from './components/SearchBar.tsx'
-
+import { searchPokemonByName } from './utils/functions.ts';
 type Pokemon = {
   name: string;
   gender: string;
@@ -35,16 +35,7 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/${search.toLowerCase()}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Pokémon nicht gefunden");
-      }
-
-      const data = await response.json();
-
+    const data = await searchPokemonByName(search);
       const mapped = {
         name: capitalize(data.name || ""),
         gender: "male/female", // The API does not provide gender information
