@@ -40,3 +40,12 @@ then
 	echo ""
 	exit 1
 fi
+
+echo ""
+echo ""
+echo "-------------------- COMMIT SUCCEEDED --------------------"
+echo "All Tests and Lint checks have been successful."
+echo "Your changes are now committed."
+echo "----------------------------------------------------------"
+echo ""
+exit 0
