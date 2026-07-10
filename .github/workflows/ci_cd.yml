@@ -103,6 +103,7 @@ jobs:
     needs:
       - lint
       - build
+      - unit-test
 
     defaults:
       run:
