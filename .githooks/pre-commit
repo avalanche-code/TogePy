@@ -18,7 +18,7 @@ then
 	RUFF_LINT_FLAG=1
 fi	
 
-if [ $PYTEST_FAIL_FLAG -eq 1 ] || [ $RUFF_LINT_FLAG -eq 1 ]
+if [ $PYTEST_FAIL_FLAG -ne 0 ] || [ $RUFF_LINT_FLAG -ne 0 ]
 then
 	echo ""
 	echo ""
