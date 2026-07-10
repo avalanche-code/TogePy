@@ -4,6 +4,7 @@ PYTEST_FAIL_FLAG=0
 RUFF_LINT_FLAG=0
 
 #run pytest with coverage and worker distribution
+# error code 2 bei beidem wenn pyproject nicht parsed werden kann
 #TODO: Fail if coverage less than 50
 uv run pytest --cov -n auto
 if [ $? -ne 0 ]
