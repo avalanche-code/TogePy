@@ -1,6 +1,6 @@
 [project]
 name = "togepy"
-version = "0.1.0"
+version = "ver0.0.1"
 description = "A Pokemon Team Builder. Written in Python, TUI made with Textual."
 readme = "README.md"
 requires-python = ">=3.14"
