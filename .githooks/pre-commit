@@ -6,19 +6,19 @@ RUFF_LINT_FLAG=0
 #run pytest with coverage and worker distribution
 #TODO: Fail if coverage less than 50
 uv run pytest --cov -n auto
-if [ $? -eq 1 ]
+if [ $? -ne 0 ]
 then
 	PYTEST_FAIL_FLAG=1
 fi
 
 #run ruff without fix, maybe let user autofix
 uv run ruff check
-if [ $? -eq 1 ]
+if [ $? -ne 0 ]
 then
 	RUFF_LINT_FLAG=1
 fi	
 
-if [ $PYTEST_FAIL_FLAG -ne 0 ] || [ $RUFF_LINT_FLAG -ne 0 ]
+if [ $PYTEST_FAIL_FLAG -eq 1 ] || [ $RUFF_LINT_FLAG -eq 1 ]
 then
 	echo ""
 	echo ""
