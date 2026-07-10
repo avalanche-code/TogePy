@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# togePy React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Diese React-Anwendung ermöglicht die Suche nach Pokémon über die Pokémon-API. Nutzer können Pokémon anzeigen lassen, speichern und später wieder aus der Liste entfernen.
 
-Currently, two official plugins are available:
+## Funktionalität
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Suche nach Pokémon über ein Suchfeld
+- Anzeige von Name, Typ, Angriffen und Bild
+- Speichern von gefundenen Pokémon in einer lokalen Liste
+- Entfernen gespeicherter Pokémon
+- Fehleranzeige bei nicht gefundenen Pokémon
 
-## React Compiler
+## Technologie-Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Playwright
+- ESLint
 
-## Expanding the ESLint configuration
+## Lokale Entwicklung
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Abhängigkeiten installieren
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Entwicklungsserver starten
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Die App ist anschließend unter http://localhost:5173 verfügbar.
+
+## Tests
+
+End-to-End-Tests mit Playwright:
+
+```bash
+npx playwright test
+```
+
+## Statische Analyse
+
+Linting mit ESLint:
+
+```bash
+npm run lint
+```
+
+## Build
+
+Produktionsbuild erzeugen:
+
+```bash
+npm run build
+```
+
+## CI/CD
+
+Unsere Pipeline ist so konzipiert, dass sie jede Änderung an der Anwendung automatisch prüft, bevor sie weiterverarbeitet wird. Der Ablauf besteht aus diesen Schritten:
+
+1. Abhängigkeiten installieren
+2. Statische Analyse mit ESLint ausführen
+3. End-to-End-Tests mit Playwright ausführen
+4. Einen Produktionsbuild erzeugen
+
+Damit wird sichergestellt, dass die App sauber, testbar und deployfähig bleibt. In einer GitHub Pages-Pipeline kann das Ergebnis nach erfolgreichem Build automatisch ins `gh-pages`-Branch deployed werden.
+
+Beispiel für den Ablauf:
+
+```bash
+npm install
+npm run lint
+npx playwright test
+npm run build
 ```
