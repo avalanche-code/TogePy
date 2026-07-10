@@ -36,6 +36,10 @@ pythonpath = [
   "."
 ]
 
+#[tool.uv.scripts]
+#verify = "ruff check && pytest && uv build"
+#sowas wäre geil, geht aber nicht. maybe mit tomlscript
+
 #uv run main_old.py
 #conftest.py, standard of pytest, fixtures, etc, oder diesen Hack
 #leere conftest.py im rootordner, dann wird syspath bei ausführen autmatisch gesetzt
