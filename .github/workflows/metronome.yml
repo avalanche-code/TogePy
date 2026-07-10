@@ -4,33 +4,84 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "ver*"
+
+permissions:
+  contents: write
 
 jobs:
-  uv-one:
-    name: python
-    runs-on: ubuntu-latest
 
+  linting:
+    name: Ruff linting
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-  
-      - name: "Set up python with github actions"
+      #Setup
+      - name: "Setup Actions Checkout"
+        uses: actions/checkout@v7
+      - name: "Setup Python Action"
         uses: actions/setup-python@v6
         with:
           python-version-file: "pyproject.toml"
-          
-      - name: Install uv
+      - name: "Setup UV action"
         uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
-  
-      #Python set up complete, install project now
+      #Initialize UV
       - name: Install TogePy project
         run: uv sync --locked --all-extras --dev
-        
+      #Commands
+      - name: run ruff linter without autofix
+        run: uv run ruff check
+
+  testing:
+    name: Pytest testing
+    runs-on: ubuntu-latest
+    steps:
+      #Setup
+      - name: "Setup Actions Checkout"
+        uses: actions/checkout@v7
+      - name: "Setup Python Action"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+      - name: "Setup UV action"
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+      #Initialize UV
+      - name: Install TogePy project
+        run: uv sync --locked --all-extras --dev
+      #Commands
       - name: test everything
         run: uv run pytest
-
       - name: test everything with coverage and on steroids
         run: uv run pytest --cov -n auto
 
-      - name: run ruff linter and NOT FIX pipeline stateless
-        run: uv run ruff check
+  building:  #Later: seperate file "release.yml". on: workflow_run: workflows: metronome, types: completed
+    name: Build Release/Artifact
+    needs:
+      - linting
+      - testing
+    if: startsWith(github.ref, 'refs/tags/ver')
+    runs-on: ubuntu-latest
+    steps:
+       #Setup
+      - name: "Setup Actions Checkout"
+        uses: actions/checkout@v7
+      - name: "Setup Python Action"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+      - name: "Setup UV action"
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+      #Initialize UV
+      - name: Install TogePy project
+        run: uv sync --locked --all-extras --dev
+      #Commands
+      - name: Build release
+        run: uv build
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+
+    #Theoretisch hier docs: run ruv sync , run mkdocs build, und wie man auf pages lädt
+
       
