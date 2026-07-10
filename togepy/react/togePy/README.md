@@ -42,7 +42,11 @@ End-to-End-Tests mit Playwright:
 ```bash
 npx playwright test
 ```
+Unitest mit Vitetest
 
+```bash
+npm run test:coverage
+```
 ## Statische Analyse
 
 Linting mit ESLint:
@@ -75,6 +79,7 @@ Beispiel für den Ablauf:
 ```bash
 npm install
 npm run lint
+npm run test:coverage
 npx playwright test
 npm run build
 ```
