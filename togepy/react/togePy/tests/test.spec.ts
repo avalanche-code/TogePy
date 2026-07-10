@@ -39,5 +39,51 @@ test.describe('Pokemon app', () => {
     await expect(page.getByText("No Pokémon saved yet.")).not.toBeVisible();
     await expect(page.getByTestId('saved-pokemon-list')).toContainText('Pikachu');
   });
+
+  test('deletes a saved Pokémon', async ({ page }) => {
+    await page.getByPlaceholder('Search Pokémon...').fill('pikachu');
+    await page.getByPlaceholder('Search Pokémon...').press('Enter');
+
+    await page.getByRole('button', { name: 'Save' }).click();
+    await page.getByRole('button', { name: 'Remove Pokémon' }).click();
+
+    await expect(page.getByTestId('saved-pokemon-list')).not.toContainText('Pikachu');
+  });
+  test('removes all saved Pokémon', async ({ page }) => {
+    const savedPokemonListLocator = page.getByTestId('saved-pokemon-list');
+    await page.getByPlaceholder('Search Pokémon...').fill('pikachu');
+    await page.getByPlaceholder('Search Pokémon...').press('Enter');
+    await page.getByRole('button', { name: 'Save' }).click();
+    await page.getByPlaceholder('Search Pokémon...').fill('raichu');
+    await page.getByPlaceholder('Search Pokémon...').press('Enter');
+    await page.getByRole('button', { name: 'Save' }).click();
+    await expect(page.getByTestId("saved-pokemon-pikachu")).toBeVisible();
+    await page
+      .getByTestId("saved-pokemon-pikachu")
+      .getByRole("button", { name: "Remove Pokémon" })
+      .click();
+    await page
+      .getByTestId("saved-pokemon-raichu")
+      .getByRole("button", { name: "Remove Pokémon" })
+      .click();
+
+
+    await expect(savedPokemonListLocator).not.toContainText('Pikachu');
+    await expect(savedPokemonListLocator).not.toContainText('Raichu');
+    await expect(savedPokemonListLocator).toContainText('No Pokémon saved yet.');
+  });
+  test('shows an alert when saving an already saved Pokémon', async ({ page }) => {
+    await page.getByPlaceholder('Search Pokémon...').fill('pikachu');
+    await page.getByPlaceholder('Search Pokémon...').press('Enter');
+
+    await page.getByRole('button', { name: 'Save' }).click();
+
+    page.once('dialog', async (dialog) => {
+      expect(dialog.message()).toContain('already saved');
+      await dialog.accept();
+    });
+    await page.getByPlaceholder('Search Pokémon...').press('Enter');// Search again for the same Pokémon cause field is not cleared after search
+    await page.getByRole('button', { name: 'Save' }).click();
+  });
 });
 

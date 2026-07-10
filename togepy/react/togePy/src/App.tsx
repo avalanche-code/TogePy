@@ -13,7 +13,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [savedPokemon, setSavedPokemon] = useState<Pokemon[]>([]);
   const [pokemon, setPokemon] = useState<Pokemon>({
-    name: "Pikachu",
+    name: "Pikachu",// can be use as id cause it is unique
     gender: "male",
     type: "Electric",
     attacks: ["Quick Attack", "Thunderbolt"],
@@ -35,7 +35,7 @@ function App() {
     setError("");
 
     try {
-    const data = await searchPokemonByName(search);
+      const data = await searchPokemonByName(search);
       const mapped = {
         name: capitalize(data.name || ""),
         gender: "male/female", // The API does not provide gender information
@@ -67,16 +67,32 @@ function App() {
       setLoading(false);
     }
   }
-
+  async function checkIfPokemonExists(name: string) {
+    const exists = savedPokemon.some((p) => p.name.toLowerCase() === name.toLowerCase());
+    if (exists) {
+      alert(`${capitalize(name)} is already saved.`);
+      return true;
+    }
+    return false;
+  }
   async function savePokemon(pokemon: Pokemon) {
-    setSaveEnabled(false);
-    setSavedPokemon((prev) => [...prev, pokemon]);
+    const exists = await checkIfPokemonExists(pokemon.name);
+    if (!exists) {
+      setSavedPokemon((prev) => [...prev, pokemon]);
+    } else {
+      setSaveEnabled(false);
+      
+      
+    }
+  }
+  async function removePokemon(pokemon: Pokemon) {
+    setSavedPokemon((prev) => prev.filter((p) => p.name !== pokemon.name));
   }
 
   return (
     <><div className="flex items-center justify-center  text-4xl mt-15" test-id="title">
-     <h1>Find a Pokémon</h1>
-     <img src="./pokeball.svg" alt="Pokéball"  className="ml-4 max-w-10 h-auto"/>
+      <h1>Find a Pokémon</h1>
+      <img src="./pokeball.svg" alt="Pokéball" className="ml-4 max-w-10 h-auto" />
     </div><div className="mx-auto mt-10 max-w-5xl px-4">
 
         <div className="mx-auto mt-8 max-w-lg">
@@ -95,7 +111,7 @@ function App() {
           <Card
             title={pokemon.name}
             subtitle={`${pokemon.gender} • ${pokemon.type}`}
-          test-id="pokemon-card">
+            test-id="pokemon-card">
             <div className="md:flex md:items-center md:justify-between">
               <div className="md:w-2/3">
                 <p className="text-gray-700">
@@ -109,14 +125,14 @@ function App() {
                 </ul>
 
                 <div>
-                  
+
                   <button
                     className={`mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white  }`}
                     disabled={!saveEnabled}
                     onClick={() => savePokemon(pokemon)}
-                   // hand cursor only when saveEnabled is true
+                    // hand cursor only when saveEnabled is true
                     style={{ cursor: saveEnabled ? 'pointer' : 'not-allowed' }}
-                 id="save-button" >
+                    id="save-button" >
                     Save
                   </button>
                   {!saveEnabled ? (<p className="text-red-600 text-sm" >Save disabled make a search first</p>) : null}
@@ -138,48 +154,52 @@ function App() {
           <p className="mt-4 text-red-600">{error || 'Pokémon nicht gefunden'}</p>
         )}
 
-        <div className="flex items-center justify-center  text-4xl mt-10" data-testid="title">
-          <h2>Your saved Pokémon</h2>
-        </div>
-        {savedPokemon.length > 0 ? (
-          <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3" data-testid="saved-pokemon-list">
-            {savedPokemon.map((p, index) => (
-              <Card
-                key={index}
-                title={p.name}
-                subtitle={`${p.gender} • ${p.type}`}
-                className="h-full min-h-[280px]"
-              >
-                <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">
-                  <div className="md:w-2/3">
-                    <p className="text-gray-700">
-                      {p.name} is a {p.type.toLowerCase()}-type Pokémon.
-                    </p>
+        <div data-testid="saved-pokemon-list">
+          <h2 className="text-center text-4xl mt-10">Your saved Pokémon</h2>
 
-                    <ul className="mt-3 list-disc pl-5 text-sm text-gray-700">
-                      {p.attacks.map((attack: string) => (
-                        <li key={attack}>{attack}</li>
-                      ))}
-                    </ul>
-                  </div>
+          {savedPokemon.length > 0 ? (
+            <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              {savedPokemon.map((p, index) => (
+                <Card
+                  key={index}
+                  title={p.name}
+                  subtitle={`${p.gender} • ${p.type}`}
+                  className="h-full min-h-[280px]"
+                  savedList={true}
+                  onRemove={() => removePokemon(p)}
+                  data-testid={`saved-pokemon-${p.name.toLowerCase()}`}
+                >
+                  <div className="flex flex-col items-center gap-4 md:flex-row md:items-start md:justify-between">
+                    <div className="md:w-2/3">
+                      <p className="text-gray-700">
+                        {p.name} is a {p.type.toLowerCase()}-type Pokémon.
+                      </p>
 
-                  {p.image ? (
-                    <div className="flex justify-center md:ml-6 md:w-1/3">
-                      <img
-                        src={p.image}
-                        alt={`${p.name} sprite`}
-                        className="h-36 w-36 object-contain md:h-44 md:w-44"
-                      />
+                      <ul className="mt-3 list-disc pl-5 text-sm text-gray-700">
+                        {p.attacks.map((attack: string) => (
+                          <li key={attack}>{attack}</li>
+                        ))}
+                      </ul>
                     </div>
-                  ) : null}
-                </div>
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <p className="mt-4">No Pokémon saved yet.</p>
-        )}
-      </div></>
+
+                    {p.image ? (
+                      <div className="flex justify-center md:ml-6 md:w-1/3">
+                        <img
+                          src={p.image}
+                          alt={`${p.name} sprite`}
+                          className="h-36 w-36 object-contain md:h-44 md:w-44"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-4">No Pokémon saved yet.</p>
+          )}
+        </div>
+        </div></>
   )
 }
 

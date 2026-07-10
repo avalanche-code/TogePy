@@ -1,11 +1,2 @@
-
-page has title togepy
-page has text Find a Pokemon
-page hasr text Your saved Pokémon
-
-search existingPokemon: except to see searching for{pokemonName} and loading and the image
-search nonExistingPokemon: Pokémon nicht gefunden
-
-save pokemon
-
 deleted a saved pokemon
+add already existingPokemon except an alert
