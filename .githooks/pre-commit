@@ -1,0 +1,42 @@
+#!/bin/sh
+
+PYTEST_FAIL_FLAG=0
+RUFF_LINT_FLAG=0
+
+#run pytest with coverage and worker distribution
+#TODO: Fail if coverage less than 50
+uv run pytest --cov -n auto
+if [ $? -eq 1 ]
+then
+	PYTEST_FAIL_FLAG=1
+fi
+
+#run ruff without fix, maybe let user autofix
+uv run ruff check
+if [ $? -eq 1 ]
+then
+	RUFF_LINT_FLAG=1
+fi	
+
+if [ $PYTEST_FAIL_FLAG -eq 1 ] || [ $RUFF_LINT_FLAG -eq 1 ]
+then
+	echo ""
+	echo ""
+	echo "-------------------- COMMIT ABORTED --------------------"
+	echo "Commit aborted due to following reason(s):"
+	echo ""
+	
+	if [ $PYTEST_FAIL_FLAG -eq 1 ];
+	then
+		echo "- Pytest failed! Check above to see tests that failed"
+	fi
+	
+	if [ $RUFF_LINT_FLAG -eq 1 ];
+	then
+		echo "- Ruff Linting failed! Check above to see why"
+		echo "Hint: try running 'uv run ruff check --fix' for autofixes"
+	fi
+	echo "--------------------------------------------------------"
+	echo ""
+	exit 1
+fi
