@@ -1,6 +1,7 @@
 from textual.app import ComposeResult
 from textual.containers import Container
 from textual.screen import Screen
+
 from textual.widgets import Button, Footer, Header, Label
 
 from togepy.tui.screens.create_team import CreateTeamScreen

@@ -36,6 +36,9 @@ then
 		echo "- Ruff Linting failed! Check above to see why"
 		echo "Hint: try running 'uv run ruff check --fix' for autofixes"
 	fi
+	echo ""
+	echo "Fix these issues and then try to commit again!"
+	echo "Run 'git restore --staged .' to revert 'git add .'"
 	echo "--------------------------------------------------------"
 	echo ""
 	exit 1
