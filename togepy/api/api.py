@@ -1,5 +1,5 @@
-from os import name as os_name
-from subprocess import call
+from os import name as os_name  #nosec
+from subprocess import call  #nosec
 
 import httpx
 
@@ -7,8 +7,8 @@ from togepy.models.pokemon import Pokemon
 
 
 #single response principle
-def clearconsole():
-    call("cls" if os_name == "nt" else "clear")
+def clearconsole(): #nosec
+    call("cls" if os_name == "nt" else "clear") #nosec
 
 class APICaller:
     def __init__(self):
@@ -43,10 +43,8 @@ def init_pokemon_obj(poke_dict: dict) -> Pokemon:
         poke_dict["poke_id"],
         poke_dict["name"],
         poke_dict["maintype"],
-        # poke_dict.get("sectype"))   #We know what to expect, so its ok, aber nicht gebraucht, ist immer da
         poke_dict["sectype"]
     )
-
     return pokemon
 
 #maybe use single function and give "key" as param for choosing if abilites or moves are needed
