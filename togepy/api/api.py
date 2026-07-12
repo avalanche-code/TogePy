@@ -49,6 +49,7 @@ def init_pokemon_obj(poke_dict: dict) -> Pokemon:
 
 #maybe use single function and give "key" as param for choosing if abilites or moves are needed
 #maybe cache per pokemon and check if queried before and list of attacks/abilities exists
+
 def change_ability(api_caller: APICaller, pokemon: Pokemon) -> list:
     reply = api_caller.get_pokemon_name(pokemon.name)
     poke_ability = reply["abilities"]

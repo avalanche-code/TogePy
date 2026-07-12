@@ -1,0 +1,64 @@
+#!/usr/bin/sh
+
+#Custom verify script to emulate mvn verify. similar to pre-commit hook
+
+PYTEST_FAIL_FLAG=0
+RUFF_LINT_FLAG=0
+BANDIT_FAIL_FLAG=0
+
+uv run ruff check
+if [ $? -ne 0 ]
+then
+    RUFF_LINT_FLAG=1
+fi
+
+#Coverage juckt hier nicht, geht nur um tests erfüllt oder nicht für local build
+uv run pytest --cov -n auto
+if [ $? -ne 0 ]
+then
+    PYTEST_FAIL_FLAG=1
+fi
+
+uv run bandit togepy -r
+if [ $? -ne 0 ]
+then
+    BANDIT_FAIL_FLAG=1
+fi
+
+echo ""
+echo "--------------- UV Check: Lint + Test + Security ---------------"
+echo "[1/3] Running ruff, linting..."
+if [ $RUFF_LINT_FLAG -eq 1 ]
+then
+	echo "✗ Lint failed"
+else
+	echo "✓ Lint passed"
+fi
+echo ""
+echo "[2/3] Running tests..."
+if [ $PYTEST_FAIL_FLAG -eq 1 ]
+then
+	echo "✗ Tests failed"
+else
+	echo "✓ Tests passed"
+fi
+echo ""
+echo "[3/3] Running security checks..."
+if [ $BANDIT_FAIL_FLAG -eq 1 ]
+then
+	echo "✗ Tests failed"
+else
+	echo "✓ Tests passed"
+fi
+echo ""
+
+if [ $PYTEST_FAIL_FLAG -eq 1 ] || [ $RUFF_LINT_FLAG -eq 1 ] || [ $BANDIT_FAIL_FLAG -eq 1 ]
+then
+	echo "--> Check failed! Check above to see why"
+	echo "----------------------------------------------------------------"
+	exit 1
+else
+	echo "--> All checks passed! Check above to see command output"
+	echo "----------------------------------------------------------------"
+fi
+exit 0
