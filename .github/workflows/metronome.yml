@@ -52,7 +52,7 @@ jobs:
       - name: test everything
         run: uv run pytest
       - name: test everything with coverage and on steroids
-        run: uv run pytest --cov -n auto
+        run: uv run pytest --cov --cov-fail-under=80 -n auto
 
   security:
     name: Bandit security check
