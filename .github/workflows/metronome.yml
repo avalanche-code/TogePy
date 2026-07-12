@@ -54,11 +54,32 @@ jobs:
       - name: test everything with coverage and on steroids
         run: uv run pytest --cov -n auto
 
+  security:
+    name: Bandit security check
+    runs-on: ubuntu-latest
+    steps:
+      #Setup
+      - name: "Setup Actions Checkout"
+        uses: actions/checkout@v7
+      - name: "Setup Python Action"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+      - name: "Setup UV action"
+        uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+      #Initialize UV
+      - name: Install TogePy project
+        run: uv sync --locked --all-extras --dev
+      #Commands
+      - name: Bandit security check
+        run: uv run bandit togepy
+
   building:  #Later: seperate file "release.yml". on: workflow_run: workflows: metronome, types: completed
     name: Build Release/Artifact
     needs:
       - linting
       - testing
+      - security
     if: startsWith(github.ref, 'refs/tags/ver')
     runs-on: ubuntu-latest
     steps:
