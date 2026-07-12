@@ -72,7 +72,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
       #Commands
       - name: Bandit security check
-        run: uv run bandit togepy
+        run: uv run bandit togepy -r
 
   building:  #Later: seperate file "release.yml". on: workflow_run: workflows: metronome, types: completed
     name: Build Release/Artifact
