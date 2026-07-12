@@ -85,9 +85,14 @@ uv run bandit togepy
 
 There is a github action in place called ```metronome.yml```. Checks every Push with Linting, Testing and Security Checks. If everything is successful and commit was pushed with a tag, the action tries to build a release. Automatically gets published in the release section of this GitHub page.
 
-There is a git hook in place called ```pre-commit```. If configured correctly, it only lets you commit changes that fulfill Linting, Testing, and Security check. This is meant as an additional security measure or "booster" for coding quality.
+There is a git hook in place called ```pre-commit```. If configured correctly, it only lets you commit changes that fulfill Linting, Testing **with 80% coverage**, and Security check. This is meant as an additional security measure or "booster" for coding quality.
 
-There are also 2 shell scripts in the project root folder. ```uv_verify``` emulates ```mvn verify```, checks everything the pre-commit hook also checks, and then builds locally with ```uv build```. ```uv_check``` does the same, but gives test coverage and doesn't build. It's only meant for manually checking your changes before ```pre-commit``` hooks in.
+There are also 2 shell scripts in the project root folder. 
+
+```uv_verify``` emulates ```mvn verify```, checks everything that the pre-commit hook also checks, but **without coverage**, and then builds locally with ```uv build```. 
+
+```uv_check``` does the same, but **gives test coverage** and doesn't build. It's only meant for manually checking your code quality before ```pre-commit``` hooks in, and as a self-check tool. 
+It also generates a local html report.
 
 ```metronome.yml```: Install dependencies -> pytest -> lint -> bandit ---if successful and tag--> uv build
 
