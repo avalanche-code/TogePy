@@ -51,7 +51,7 @@ def test_poketeam_len():
 def test_poketeam_maxlen():
     team = PokeTeam("Team 1")
     testpoke = Pokemon(1, "ditto", "", "")
-    for i in range(0,10):
+    for _ in range(0,10):
         team = add_pokemon_to_team(team, testpoke)
     assert len(team.pokemons) == MAX_TEAM_SIZE
 
