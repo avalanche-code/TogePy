@@ -21,7 +21,7 @@ class APICaller:
         if result.is_error:
             raise ValueError("Pokemon name not found")
         else:
-            #return json.loads(result.json()) doch falsch lol
+            #return json.loads(result.json())
             return result.json()
 
 

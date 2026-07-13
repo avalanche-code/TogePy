@@ -9,7 +9,7 @@ from togepy.api.api import (
 from togepy.models.pokemon import Pokemon, PokeTeam
 
 #from togepy.tui.screens.query_menu import MAX_TEAM_SIZE macht coverage kaputt, liegt in screen
-
+#test
 MAX_TEAM_SIZE = 6
 
 #All das wo api caller benutzt wird oder sonst was mit mock/dummy/stub/double?
