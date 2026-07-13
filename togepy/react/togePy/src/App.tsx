@@ -91,7 +91,7 @@ function App() {
 
   return (
     <><div className="flex items-center justify-center  text-4xl mt-15" test-id="title">
-      <h1>Find a Pokémon</h1>
+      <h1>Find a Pokémon!</h1>
       <img src="./pokeball.svg" alt="Pokéball" className="ml-4 max-w-10 h-auto" />
     </div><div className="mx-auto mt-10 max-w-5xl px-4">
 
