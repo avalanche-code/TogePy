@@ -12,8 +12,8 @@ then
     RUFF_LINT_FLAG=1
 fi
 
-#Coverage juckt hier nicht, geht nur um tests erfüllt oder nicht für local build
-uv run pytest --cov -n auto
+#Coverage juckt hier, Coverage als Selbstcheck, inkl. html report. excluded in gitignore
+uv run pytest --cov --cov-report=html --cov-fail-under=80 -n auto
 if [ $? -ne 0 ]
 then
     PYTEST_FAIL_FLAG=1
@@ -46,9 +46,9 @@ echo ""
 echo "[3/3] Running security checks..."
 if [ $BANDIT_FAIL_FLAG -eq 1 ]
 then
-	echo "✗ Tests failed"
+	echo "✗ Security check failed"
 else
-	echo "✓ Tests passed"
+	echo "✓ Security check passed"
 fi
 echo ""
 

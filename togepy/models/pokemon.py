@@ -1,9 +1,9 @@
-
+# str | none fixes expected str, got none
 class Pokemon:
     def __init__(self, pokedex_id: int,
                  name: str,
                  maintype: str,
-                 sectype: str,
+                 sectype: str | None,
                  ):
 
         self.pokedex_id = pokedex_id

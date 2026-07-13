@@ -15,7 +15,7 @@ class APICaller:
         self.base_url = "https://pokeapi.co/api/v2/pokemon/"
         self.session1 = httpx.Client()                          #Client() of httpx instead of requests' session()
 
-    def get_pokemon_name(self, name) -> dict:
+    def get_pokemon_name(self, name: str) -> dict:
         result = self.session1.get(self.base_url + name)
         if result.is_error:
             raise ValueError("Pokemon name not found")
@@ -57,7 +57,6 @@ def change_ability(api_caller: APICaller, pokemon: Pokemon) -> list:
 
     for ability in poke_ability:
         abilities.append(ability["ability"]["name"])
-
     return abilities
 
 def change_moves(api_caller: APICaller, pokemon: Pokemon) -> list:
@@ -67,5 +66,5 @@ def change_moves(api_caller: APICaller, pokemon: Pokemon) -> list:
 
     for move in poke_moves:
         moves.append(move["move"]["name"])
-
     return moves
+

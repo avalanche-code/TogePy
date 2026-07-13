@@ -2,41 +2,55 @@
 
 PYTEST_FAIL_FLAG=0
 RUFF_LINT_FLAG=0
+BANDIT_FAIL_FLAG=0
 
-#run pytest with coverage and worker distribution
+# run pytest with coverage and worker distribution
 # error code 2 bei beidem wenn pyproject nicht parsed werden kann
-#TODO: Fail if coverage less than 50
-uv run pytest --cov -n auto
-if [ $? -ne 0 ]
-then
-	PYTEST_FAIL_FLAG=1
-fi
-
 #run ruff without fix, maybe let user autofix
 uv run ruff check
 if [ $? -ne 0 ]
 then
 	RUFF_LINT_FLAG=1
-fi	
+fi
 
-if [ $PYTEST_FAIL_FLAG -eq 1 ] || [ $RUFF_LINT_FLAG -eq 1 ]
+# Fail if coverage less than 80.
+uv run pytest --cov --cov-fail-under=80 -n auto
+if [ $? -ne 0 ]
+then
+	PYTEST_FAIL_FLAG=1
+fi
+
+uv run bandit togepy -r
+if [ $? -ne 0 ]
+then
+	BANDIT_FAIL_FLAG=1
+fi
+
+if [ $PYTEST_FAIL_FLAG -eq 1 ] || [ $RUFF_LINT_FLAG -eq 1 ] || [ $BANDIT_FAIL_FLAG -eq 1 ]
 then
 	echo ""
 	echo ""
 	echo "-------------------- COMMIT ABORTED --------------------"
 	echo "Commit aborted due to following reason(s):"
 	echo ""
-	
-	if [ $PYTEST_FAIL_FLAG -eq 1 ];
-	then
-		echo "- Pytest failed! Check above to see tests that failed"
-	fi
-	
 	if [ $RUFF_LINT_FLAG -eq 1 ];
 	then
 		echo "- Ruff Linting failed! Check above to see why"
 		echo "Hint: try running 'uv run ruff check --fix' for autofixes"
 	fi
+
+	if [ $PYTEST_FAIL_FLAG -eq 1 ];
+	then
+		echo "- Pytest failed! Check above to see tests that failed"
+		echo "Hint: 80 percent coverage needed for successful test!"
+	fi
+
+	if [ $BANDIT_FAIL_FLAG -eq 1 ];
+	then
+		echo "- Bandit security checks failed! Check above to see why"
+	fi
+
+
 	echo ""
 	echo "Fix these issues and then try to commit again!"
 	echo "Run 'git restore --staged .' to revert 'git add .'"

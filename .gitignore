@@ -17,3 +17,6 @@ wheels/
 
 #ignore coverage from pytest
 .coverage
+
+#ignore html report of coverage
+htmlcov/

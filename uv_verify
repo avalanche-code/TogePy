@@ -46,9 +46,9 @@ echo ""
 echo "[3/4] Running security checks..."
 if [ $BANDIT_FAIL_FLAG -eq 1 ]
 then
-	echo "✗ Tests failed"
+	echo "✗ Security check failed"
 else
-	echo "✓ Tests passed"
+	echo "✓ Security check passed"
 fi
 
 echo ""
