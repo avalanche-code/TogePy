@@ -1,13 +1,18 @@
 from togepy.api.api import (
     APICaller,
+    add_pokemon_to_team,
     change_ability,
     change_moves,
     init_pokemon_obj,
     sanitize_dict,
 )
-from togepy.models.pokemon import Pokemon
+from togepy.models.pokemon import Pokemon, PokeTeam
 
+#from togepy.tui.screens.query_menu import MAX_TEAM_SIZE macht coverage kaputt, liegt in screen
 
+MAX_TEAM_SIZE = 6
+
+#All das wo api caller benutzt wird oder sonst was mit mock/dummy/stub/double?
 #Unit Test
 def test_change_ability():
     #Arrange
@@ -35,6 +40,20 @@ def test_sanitize_dict():
                            "maintype": "Normal",
                            "sectype": None}
 
+#Unit Test
+def test_poketeam_len():
+    team = PokeTeam("Team 1")
+    testpoke = Pokemon(1, "ditto", "", "")
+    team = add_pokemon_to_team(team, testpoke)
+    assert len(team.pokemons) == 1
+
+#Unit Test
+def test_poketeam_maxlen():
+    team = PokeTeam("Team 1")
+    testpoke = Pokemon(1, "ditto", "", "")
+    for i in range(0,10):
+        team = add_pokemon_to_team(team, testpoke)
+    assert len(team.pokemons) == MAX_TEAM_SIZE
 
 #Integration Test
 def test_init_pokemon_obj():

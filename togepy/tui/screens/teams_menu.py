@@ -39,6 +39,7 @@ class TeamsMenu(Screen):
                 id="view_teams",
                 variant="primary",
                 classes="button_mid",
+                disabled=True
             ),
             Button(
                 "➕ Create Team",

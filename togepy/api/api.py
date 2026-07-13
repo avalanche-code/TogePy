@@ -2,9 +2,9 @@ from os import name as os_name  #nosec
 from subprocess import call  #nosec
 
 import httpx
+from textual.reactive import reactive
 
-from togepy.models.pokemon import Pokemon
-
+from togepy.models.pokemon import Pokemon, PokeTeam
 
 #single response principle
 def clearconsole(): #nosec
@@ -68,3 +68,9 @@ def change_moves(api_caller: APICaller, pokemon: Pokemon) -> list:
         moves.append(move["move"]["name"])
     return moves
 
+def add_pokemon_to_team(poketeam: PokeTeam, pokemon: Pokemon) -> PokeTeam:
+    if len(poketeam.pokemons) < 6:
+        poketeam.pokemons.append(pokemon)
+        return poketeam
+    #if no space left: team stays unchanged
+    return poketeam

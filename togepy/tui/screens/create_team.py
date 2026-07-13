@@ -6,8 +6,7 @@ from textual.widgets import Button, Footer, Header, Input, Label, Static
 from togepy.models.pokemon import PokeTeam
 
 
-#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
-def refresh_teams_prompt(self, teams: list) -> str:
+def refresh_teams_prompt(self) -> str:
     if not self.app.teams_inapp:
         return "No Teams created."
 
@@ -16,6 +15,7 @@ def refresh_teams_prompt(self, teams: list) -> str:
         prompt += team.team_name + "\n"
     return prompt
 
+#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
 class CreateTeamScreen(Screen):
 
     CSS = """
@@ -56,7 +56,7 @@ class CreateTeamScreen(Screen):
             id="leftside"),
             Vertical(
                 Label(
-                    refresh_teams_prompt(self, self.app.teams_inapp),
+                    refresh_teams_prompt(self),
                     id="teams_info",
                 )
             ),
@@ -91,7 +91,7 @@ class CreateTeamScreen(Screen):
             return #this doesnt rename automatically. maybe fix some other time
 
         self.app.teams_inapp += [PokeTeam(team_name_suggest)] #in neuem button. suggestion that reference needs to be updated for reactive
-        info.update(refresh_teams_prompt(self, self.app.teams_inapp))
+        info.update(refresh_teams_prompt(self))
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         match event.button.id:

@@ -12,16 +12,6 @@ from textual.screen import Screen
 from textual.widgets import Button, Collapsible, Footer, Header, Input, Label, Static
 
 
-#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
-def refresh_teams_prompt(self, teams: list) -> str:
-    if not self.app.teams_inapp:
-        return "No Teams created."
-
-    prompt = "Existing Teams:\n"
-    for team in self.app.teams_inapp:
-        prompt += team.team_name + "\n"
-    return prompt
-
 #margin außerhalb, padding innerhalb
 class DeleteTeamScreen(Screen):
     CSS = """
