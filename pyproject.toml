@@ -20,11 +20,9 @@ dev = [
     "ruff>=0.15.12",
 ]
 
-#Custom Ruff Settings
 [tool.ruff]
 #Enable preview rules for linting
-preview = false #die saugen performance
-#"PL" for pylint
+preview = false #experimentelle Regeln: performance schlecht
 #"N" for pep8-naming
 #"E" for pycodestyle, beide machen Line too long oder "not enough blanks"
 [tool.ruff.lint]
@@ -37,14 +35,3 @@ select = ["F", "I", "B", "UP", "PL"]
 pythonpath = [
   "."
 ]
-
-#[tool.uv.scripts]
-#verify = "ruff check && pytest && uv build"
-#sowas wäre geil, geht aber nicht. maybe mit tomlscript
-
-#uv run main_old.py
-#conftest.py, standard of pytest, fixtures, etc, oder diesen Hack
-#leere conftest.py im rootordner, dann wird syspath bei ausführen autmatisch gesetzt
-
-
-#use docker container to deploy for othersq

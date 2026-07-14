@@ -100,7 +100,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
-
-    #Theoretisch hier docs: run ruv sync , run mkdocs build, und wie man auf pages lädt
-
-      

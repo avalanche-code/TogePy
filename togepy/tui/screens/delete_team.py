@@ -61,11 +61,10 @@ class DeleteTeamScreen(Screen):
         yield Footer()
 
     def on_mount(self):
-        #self.query_one("#allteams", Label).update(refresh_teams_prompt(self, self.app.teams_inapp))
         teams_container = self.query_one("#teams_container", VerticalScroll)
 
         if not self.app.teams_inapp:
-            teams_container.mount(Label("No Teams created.")) #no other logic like try except needed for querying if label is shown then hide and then make new collapsibles below
+            teams_container.mount(Label("No Teams created.")) #no other logic (try except) needed for querying if label is shown then hide and then make new collapsibles below
 
         for team in self.app.teams_inapp:
             teams_container.mount(Collapsible(Static("Team members here"), collapsed=True, title=team.team_name, id="b64-"+str(base64.b16encode(team.team_name.encode("utf-8")))[2:-1]))
@@ -75,7 +74,7 @@ class DeleteTeamScreen(Screen):
         warning = self.query_one("#warning_static", Static)
         to_delete = event.value.strip().title()
 
-        #Es wurde ja sichergestellt dass Pro element in teamslist hier ein collapsible ist, demnach kann ich ohne prüfung auch das element aus liste löschen
+        #Es wurde ja sichergestellt dass pro Element in teamslist hier ein collapsible ist, demnach kann ich ohne prüfung auch das element aus liste löschen
         #durch die erstellung des collapsible wissen wir ja dass es das gibt.
         try:
             collapsible_hit = self.query_one(f"#{'b64-' + str(base64.b16encode(to_delete.encode("utf-8")))[2:-1]}", Collapsible)
@@ -85,7 +84,6 @@ class DeleteTeamScreen(Screen):
         else:
             collapsible_hit.remove()
             warning.update(f"Team {to_delete} deleted.")
-            #erste erscheinung reicht, da keine zwei einträge mit gleichem namen da sien kann, remember nasim and burger
             for team in self.app.teams_inapp:
                 if team.team_name == to_delete:
                     self.app.teams_inapp.remove(team)

@@ -95,7 +95,6 @@ class QueryMenu(Screen):
             teams_selector.add_option(option=team.team_name)
 
     def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
-        #outsource this function to use again when a pokemon has been added
         teamname= event.option.prompt
         self.refresh_teams_overview(teamname)
 
@@ -136,8 +135,6 @@ class QueryMenu(Screen):
         if self.app.teams_inapp:
             add_button.disabled = False
 
-    #Es würde auch gehen dass wenn man element aus liste wählt dann der button highlighted wird, aber das schwer
-    #Dann muss man schauen dass pokemon vorher queried wurde oder auch erfüllt wird.
     #More streamlined wie ein Fluss würde die pokemon addition auch gehen. Query, dann add team, dann screen mit teams, yes/no button
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -153,12 +150,12 @@ class QueryMenu(Screen):
                     warning_static.update(f"DEBUG ADD {teams_selector.highlighted_option.prompt}")  #id would be better but base16 has to be implemented as external func
                     #warnung kann ignoriert werden. wir haben garantiert immer nur options nach vorgegebenem Prinzip
                     for team in self.app.teams_inapp:
-                        if team.team_name == teams_selector.highlighted_option.prompt:  #error handling if none? eig nicht benötigt
-                            if len(team.pokemons) == MAX_TEAM_SIZE:    #früher checken? oder externe func. oder jeweils halt hioer bei add, sonstwo bei delete
+                        if team.team_name == teams_selector.highlighted_option.prompt:  #error handling if none? eig nicht benötigt, none kommt nicht vor
+                            if len(team.pokemons) == MAX_TEAM_SIZE:    #früher checken? oder externe func. oder jeweils halt hier bei add, sonstwo bei delete
                                 warning_static.update(f"DA SIND SCHON {MAX_TEAM_SIZE}")
                                 return
 
-                            #use cached version from above here... no new api call: done by using class var
+                            #use cached version from above here... no new api call: done by using class var self.pokemon_candidate = poke_candidate
                             team.pokemons.append(self.pokemon_candidate)
                             self.refresh_teams_overview(team.team_name)
                             #TODO This moves the selector down. fix in css

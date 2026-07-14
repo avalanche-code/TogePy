@@ -9,7 +9,9 @@ from togepy.tui.screens.delete_team import DeleteTeamScreen
 
 class TeamsMenu(Screen):
     """Team management menu"""
-
+    
+    #Besser wäre hier die gesamte view team ansicht als primären screen zu machen, und dann add/delete als seperate buttons in diesem screen. Unnötig 3 buttons zu haben
+    #UI Design Prinzipien anschauen
     #Header isnt centered with Label? Idk why not. seperate label already has margin to next container? wegen \n
     CSS = """
     Label {
@@ -56,7 +58,6 @@ class TeamsMenu(Screen):
                 id="back",
             ),
         )
-
         yield Footer()
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
@@ -66,11 +67,12 @@ class TeamsMenu(Screen):
                 self.app.push_screen("team_list")
 
             case "create_team":
+                # "hack": destroying screen and always new building so that mount gets used, speicheroptimierung?
                 self.app.push_screen(CreateTeamScreen())    #create_team
 
             case "delete_team":
                 # "hack": destroying screen and always new building so that mount gets used, speicheroptimierung?
-                self.app.push_screen(DeleteTeamScreen())
+                self.app.push_screen(DeleteTeamScreen())    #delete_team
 
             case "back":
                 self.app.pop_screen()

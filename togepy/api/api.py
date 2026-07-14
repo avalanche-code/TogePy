@@ -14,14 +14,13 @@ def clearconsole(): #nosec
 class APICaller:
     def __init__(self):
         self.base_url = "https://pokeapi.co/api/v2/pokemon/"
-        self.session1 = httpx.Client()                          #Client() of httpx instead of requests' session()
+        self.session1 = httpx.Client() #Client() of httpx instead of requests' session()
 
     def get_pokemon_name(self, name: str) -> dict:
         result = self.session1.get(self.base_url + name)
         if result.is_error:
             raise ValueError("Pokemon name not found")
         else:
-            #return json.loads(result.json())
             return result.json()
 
 
@@ -49,7 +48,8 @@ def init_pokemon_obj(poke_dict: dict) -> Pokemon:
     return pokemon
 
 #maybe use single function and give "key" as param for choosing if abilites or moves are needed
-#maybe cache per pokemon and check if queried before and list of attacks/abilities exists
+#no: single response principle
+#maybe cache per pokemon and check if queried before, and list of attacks/abilities exists
 
 def change_ability(api_caller: APICaller, pokemon: Pokemon) -> list:
     reply = api_caller.get_pokemon_name(pokemon.name)
@@ -73,5 +73,4 @@ def add_pokemon_to_team(poketeam: PokeTeam, pokemon: Pokemon) -> PokeTeam:
     if len(poketeam.pokemons) < MAX_TEAM_SIZE:
         poketeam.pokemons.append(pokemon)
         return poketeam
-    #if no space left: team stays unchanged
-    return poketeam
+    return poketeam #if no space left: team stays unchanged

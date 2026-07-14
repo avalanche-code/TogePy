@@ -6,6 +6,8 @@ from textual.widgets import Button, Footer, Header, Input, Label, Static
 from togepy.models.pokemon import PokeTeam
 
 
+#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
+#sonst self.app.teams_inapp nicht abrufbar wenn in modul
 def refresh_teams_prompt(self) -> str:
     if not self.app.teams_inapp:
         return "No Teams created."
@@ -15,7 +17,6 @@ def refresh_teams_prompt(self) -> str:
         prompt += team.team_name + "\n"
     return prompt
 
-#Ich weiß nicht ob hier der richtige Ort für diese Funktion ist
 class CreateTeamScreen(Screen):
 
     CSS = """

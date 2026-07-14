@@ -9,7 +9,7 @@ wheels/
 # Virtual environments
 .venv
 
-# Ignoring IDE Folder (c)
+# Ignoring IDE Folder
 .idea
 
 # Ignoring files with tons of comments
@@ -20,3 +20,6 @@ wheels/
 
 #ignore html report of coverage
 htmlcov/
+
+#ignore apptempt at creating a docker container
+Containerfile

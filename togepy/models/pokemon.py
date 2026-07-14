@@ -12,7 +12,7 @@ class Pokemon:
         self.sectype = sectype
 
         self.ability = ""
-        self.moves = []   #ensure only 4 things
+        self.moves = [] #ensure only 4 moves seperately
 
 class PokeTeam:
     def __init__(self, team_name: str):

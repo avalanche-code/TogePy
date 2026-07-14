@@ -10,6 +10,9 @@ from togepy.tui.screens.teams_menu import TeamsMenu
 
 class TogePyApp(App):
     """Main application entry point."""
+    #Initiierung Teamsliste. Reactive um Textual das aktualisieren in Widgets leichter zu machen
+    #Hier, damit andere Screens unter self.app.teams_inapp die gleiche Liste benutzen
+    #Anderer approach? Import aus einem Modul hat nicht richtig geklappt
     teams_inapp = reactive([])
 
     BINDINGS = [
@@ -32,8 +35,3 @@ class TogePyApp(App):
 
     def action_quit(self) -> None:
         self.exit()
-
-#Entry point is in togepy.__main__
-# if __name__ == "__main__":
-#     app = TogePyApp()
-#     app.run()

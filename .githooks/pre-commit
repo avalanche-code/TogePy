@@ -6,14 +6,13 @@ BANDIT_FAIL_FLAG=0
 
 # run pytest with coverage and worker distribution
 # error code 2 bei beidem wenn pyproject nicht parsed werden kann
-#run ruff without fix, maybe let user autofix
 uv run ruff check
 if [ $? -ne 0 ]
 then
 	RUFF_LINT_FLAG=1
 fi
 
-# Fail if coverage less than 80.
+# Fail if coverage less than 80
 uv run pytest --cov --cov-fail-under=80 -n auto
 if [ $? -ne 0 ]
 then
@@ -62,7 +61,7 @@ fi
 echo ""
 echo ""
 echo "-------------------- COMMIT SUCCEEDED --------------------"
-echo "All Tests and Lint checks have been successful."
+echo "All Tests, Lint and Security checks have been successful."
 echo "Your changes are now committed."
 echo "----------------------------------------------------------"
 echo ""

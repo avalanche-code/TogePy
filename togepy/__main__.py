@@ -1,4 +1,4 @@
-from togepy.tui.app import TogePyApp  #Carls Version
+from togepy.tui.app import TogePyApp
 
 
 def main():
